@@ -1,7 +1,6 @@
 #include "BrickPi3.h"
 #include <iostream>
-#include <singal.h>
-using namespace std;
+#include <signal.h>
 
 BrickPi BP;
 
@@ -18,7 +17,7 @@ int main() {
 
   while(true) {
     if(BP.get_sensor(PORT_1, light) == 0) {
-      cout << "Light sensor (S0) : reflected" << setw(4) << Light.reflected << endl;
+      std::cout << "Light sensor (S0) : reflected" << setw(4) << Light.reflected << endl;
     }
   }
 }
