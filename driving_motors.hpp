@@ -1,12 +1,17 @@
 #ifndef DRIVING_MOTORS_HPP
 #define DRIVING_MOTORS_HPP
-#include "BrickPi3.h"
 
 
+void initialize ();
 
+void straight (float speed, char f_r);
 
-void straight (int speed, char f_b);
+void turn (float speed, char f_r, float corner);
 
 void stop ();
+
+void free ();
+
+void reset_motors();
 
 #endif
