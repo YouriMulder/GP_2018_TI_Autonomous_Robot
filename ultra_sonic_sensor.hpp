@@ -1,5 +1,5 @@
-#ifndef _ULTRASONICSENSOR_HPP
-#define _ULTRASONICSENSOR_HPP
+#ifndef _ULTRA_SONIC_SENSOR_HPP
+#define _ULTRA_SONIC_SENSOR_HPP
 
 void exit_signal_handler(int signo);
 
