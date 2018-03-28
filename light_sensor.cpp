@@ -5,16 +5,19 @@ using namespace std;
 
 BrickPi3 BP;
 
-int set_light_sensor(const uint8_t & port = PORT_2){
+//setup a light sensor. defauld port is PORT_1
+int set_light_sensor(const uint8_t & port = PORT_1){
     return BP.set_sensor_type(port, SENSOR_TYPE_NXT_LIGHT_ON);
 }
 
-int read_light_sensor(sensor_light_t data, uint8_t port = PORT_2){
+//get light sensor data.
+int read_light_sensor(sensor_light_t data, uint8_t port = PORT_1){
     BP.get_sensor(port, data);
     return data.reflected;
 }
 
-bool detect_line(sensor_light_t data, uint8_t port = PORT_2){
+//check if the sensor sees black
+bool light_detect_line(sensor_light_t data, uint8_t port = PORT_1){
     int result = read_light_sensor(data, port);
     if(result > 2100){
         return true;
