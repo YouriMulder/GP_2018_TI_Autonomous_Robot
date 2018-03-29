@@ -1,5 +1,5 @@
-#ifndef DRIVING_MOTORS_HPP
-#define DRIVING_MOTORS_HPP
+#ifndef _DRIVING_MOTORS_HPP
+#define _DRIVING_MOTORS_HPP
 
 
 void initialize ();
@@ -14,4 +14,5 @@ void free ();
 
 void reset_motors();
 
-#endif
+
+#endif /* _DRIVING_MOTORS_HPP */
