@@ -1,6 +1,6 @@
-#include "ultra_sonic_sensor.hpp"
+#include "headers/ultra_sonic_sensor.hpp"
 
-#include "BrickPi3.h"
+#include "BrickPi3/BrickPi3.h"
 #include <iostream>
 #include <chrono>
 #include <thread>
@@ -53,7 +53,7 @@ int get_ultra_distance() {
 }
 
 bool is_ultra_distance_enough() {
-  return get_ultra_distance() > min_ultra_distance;
+  return (get_ultra_distance() < min_ultra_distance);
 }
 
 void init_ultra_sensor() {

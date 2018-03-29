@@ -2,7 +2,7 @@
 #define DRIVING_MOTORS_HPP
 
 
-void initialize ();
+void init_motors();
 
 void straight (float speed, char f_r);
 

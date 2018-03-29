@@ -1,5 +1,5 @@
-#include "driving_motors.hpp"
-#include "BrickPi3.h"
+#include "headers/driving_motors.hpp"
+#include "BrickPi3/BrickPi3.h"
 #include <unistd.h>
 #include <signal.h>
 #include <iostream>
@@ -17,7 +17,7 @@ int main(){
 		cin >> angle;
 		straight(angle,'f');
 	}
-	
+
 }
 
 void exit_signal_handler(int signo) {
