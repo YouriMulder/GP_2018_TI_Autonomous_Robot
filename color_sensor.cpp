@@ -12,11 +12,12 @@ int set_color_sensor(const uint8_t & port = PORT_2){
 
 //retrun value between 0 to 100. 0 is black, 100 is white.
 int color_get_reflection(sensor_color_t data, uint8_t port = PORT_2){
-    BP.get_sensor(port, data);
+    BP_color.get_sensor(port, data);
     float reflection = data.reflected_green;
+    cout << "test1: " << reflection << "\n";
     reflection += data.reflected_red;
     reflection += data.reflected_blue;
-    reflection = ((reflection / 3) - 320)/430 * 100;
+    reflection = ((reflection / 3) - 430)/340 * 100;
     if (reflection < 0){
         return 0;
     }
