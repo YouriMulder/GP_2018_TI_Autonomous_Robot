@@ -14,4 +14,6 @@ void free ();
 
 void reset_motors();
 
+void turn_on_place (char f_r,float corner);
+
 #endif
