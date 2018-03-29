@@ -3,16 +3,16 @@
 
 using namespace std;
 
-BrickPi3 BP;
+BrickPi3 BP_color;
 
 //setup a color sensor. defauld port is PORT_2
 int set_color_sensor(const uint8_t & port = PORT_2){
-    return BP.set_sensor_type(port, SENSOR_TYPE_NXT_COLOR_FULL);
+    return BP_color.set_sensor_type(port, SENSOR_TYPE_NXT_COLOR_FULL);
 }
 
 //get the color sensor data
 int read_color_sensor(sensor_color_t data, uint8_t port = PORT_2){
-    BP.get_sensor(port, data);
+    BP_color.get_sensor(port, data);
     return data.color;
 }
 

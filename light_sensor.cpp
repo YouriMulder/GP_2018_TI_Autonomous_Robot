@@ -3,16 +3,16 @@
 
 using namespace std;
 
-BrickPi3 BP;
+BrickPi3 BP_light;
 
 //setup a light sensor. defauld port is PORT_1
 int set_light_sensor(const uint8_t & port = PORT_1){
-    return BP.set_sensor_type(port, SENSOR_TYPE_NXT_LIGHT_ON);
+    return BP_light.set_sensor_type(port, SENSOR_TYPE_NXT_LIGHT_ON);
 }
 
 //get light sensor data.
 int read_light_sensor(sensor_light_t data, uint8_t port = PORT_1){
-    BP.get_sensor(port, data);
+    BP_light.get_sensor(port, data);
     return data.reflected;
 }
 
