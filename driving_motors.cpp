@@ -12,6 +12,8 @@ void initialize(){
 	 * purpose: initializing the robots itself so the brickpi is comunicating with the code
 	 */
 	BP_wheels.detect();
+	BP_wheels.set_motor_limits(L,50,1200);
+	BP_wheels.set_motor_limits(R,50,1200);
 }
 
 void straight (float speed, char f_r) {
