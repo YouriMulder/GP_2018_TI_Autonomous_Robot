@@ -6,7 +6,7 @@
 #include "headers/ultra_sonic_sensor.hpp"
 using namespace std;
 
-int current_speed = 100;
+int current_speed = 5;
 int current_angle = 0;
 char current_direction = 'f';
 // getters and setters
@@ -37,12 +37,20 @@ void set_current_direction(const char& direction) {
 // ------------------
 
 void dodge_object_state() {
-  cout << "Dodge" << endl;
+  set_motor_ultra_right();
+  current_angle = 90;
+  turn_on_place(current_direction, current_angle);
+  current_angle = 0;
+  std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+  set_motor_ultra_straight();
+  straight(current_speed, current_direction);
 }
 
 void follow_line_state() {
+  cout << current_speed << endl;
   if(!is_ultra_distance_enough()) {
     stop();
+    dodge_object_state();
   } else {
     straight(current_speed, current_direction);
   }

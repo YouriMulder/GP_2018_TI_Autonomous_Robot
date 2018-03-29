@@ -53,11 +53,14 @@ int get_ultra_distance() {
 }
 
 bool is_ultra_distance_enough() {
-  return (get_ultra_distance() < min_ultra_distance);
+  int distance = get_ultra_distance();
+  cout << !(distance > 0 && distance < min_ultra_distance) << endl;
+  return !(distance > 0 && distance < min_ultra_distance);
 }
 
 void init_ultra_sensor() {
   int detect = BP_ultra.detect();
   int sensor_type = BP_ultra.set_sensor_type(ULTRASONIC, SENSOR_TYPE_NXT_ULTRASONIC);
+  set_motor_ultra_start_pos();
   reset_motor_ultra_offset();
 }
