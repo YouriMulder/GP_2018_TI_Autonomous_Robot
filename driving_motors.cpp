@@ -3,7 +3,6 @@
 #include <iostream>
 using namespace std;
 
-
 BrickPi3 BP_wheels;
 
 uint8_t L = PORT_A;
@@ -17,6 +16,7 @@ void straight (float speed, char f_r) {
 	speed = speed/5;
 	speed = speed *32.767;
 	if (f_r == 'f') {
+
 		BP_wheels.set_motor_dps(L,speed);
 		BP_wheels.set_motor_dps(R,speed);
 	}
@@ -69,11 +69,11 @@ void turn (float speed, char f_r, float corner){
 			left_motor = speed;
 		}
 	}
-
 	BP_wheels.set_motor_dps(L,left_motor);
 	BP_wheels.set_motor_dps(R,right_motor);
 }
 
 void reset_motors(){
 	free();
+}
 }
