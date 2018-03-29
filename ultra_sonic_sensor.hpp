@@ -3,16 +3,17 @@
 
 void exit_signal_handler(int signo);
 
-void reset_motor_offset();
-void set_motor_position(const int& position);
-void set_motor_start_pos();
-void turn_motor(const int& degrees);
-void set_motor_straight();
-void set_motor_left();
-void set_motor_right();
+void reset_motor_ultra_offset();
+void set_motor_ultra_position(const int& position);
+void set_motor_ultra_start_pos();
+void turn_motor_ultra(const int& degrees);
+void set_motor_ultra_straight();
+void set_motor_ultra_left();
+void set_motor_ultra_right();
 
-int get_ultrasonic_distance();
-int is_sensor_active();
-void init_ultrasonic_sensor();
+int get_ultra_distance();
+int is_ultra_active();
+bool is_ultra_distance_enough();
+void init_ultra_sensor();
 
-#endif /* _ULTRASONICSENSOR_HPP */
+#endif /* _ULTRA_SONIC_SENSOR_HPP */
