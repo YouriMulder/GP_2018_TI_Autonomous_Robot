@@ -4,6 +4,8 @@
 #include "headers/state_manager.hpp"
 #include "headers/driving_motors.hpp"
 #include "headers/ultra_sonic_sensor.hpp"
+#include "headers/light_sensor.hpp"
+#include "headers/color_sensor.hpp"
 using namespace std;
 
 int current_speed = 5;

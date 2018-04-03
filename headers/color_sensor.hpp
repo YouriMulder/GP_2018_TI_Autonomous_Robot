@@ -9,7 +9,7 @@ using namespace std;
 
 BrickPi3 BP_color;
 
-struct calibrate{
+struct calibrate_color {
     int max;
     int min;
 };
