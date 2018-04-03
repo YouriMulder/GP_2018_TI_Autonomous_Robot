@@ -34,7 +34,6 @@ bool light_detect_line(){
 int light_get_reflection(){
     BP_light.get_sensor(PORT_1, light_data);
     float reflection = light_data.reflected;
-   
     reflection = (reflection - light.min)/(light.max - light.min) * 100;
     if(reflection < 0){
         reflection = 0;

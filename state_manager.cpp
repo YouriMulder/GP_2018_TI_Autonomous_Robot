@@ -50,8 +50,6 @@ void dodge_object_state() {
 }
 
 void follow_line_state() {
-
-
 		  //if(!is_ultra_distance_enough()) {
 			//stop();
 			//dodge_object_state();
@@ -97,5 +95,4 @@ void follow_line_state() {
 		
 		  cout << current_angle << endl;
 		turn(current_speed, current_direction, current_angle*2);
-		
 }

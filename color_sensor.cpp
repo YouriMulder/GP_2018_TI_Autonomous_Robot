@@ -26,6 +26,7 @@ int color_get_reflection(){
     if (reflection < 0){
         return 0;
     }
+
 	if(reflection > 100){
       reflection = 100;
     }
