@@ -1,6 +1,5 @@
-#include "BrickPi3.h"
-#include "light_sensor.hpp"
-#include <iostream>
+#include "BrickPi3/BrickPi3.h"
+#include "headers/light_sensor.hpp"
 
 using namespace std;
 

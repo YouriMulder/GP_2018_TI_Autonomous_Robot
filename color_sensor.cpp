@@ -1,6 +1,5 @@
-#include "BrickPi3.h"
-#include "color_sensor.hpp"
-#include <iostream>
+#include "BrickPi3/BrickPi3.h"
+#include "headers/color_sensor.hpp"
 
 using namespace std;
 
@@ -24,6 +23,7 @@ int color_get_reflection(sensor_color_t data, uint8_t port = PORT_2){
     cout << "test1: " << reflection << "\n";
     reflection += data.reflected_red;
     reflection += data.reflected_blue;
+
     reflection = ((reflection / 3) - color.min)/(color.max - color.min) * 100;
     if (reflection < 0){
         return 0;
