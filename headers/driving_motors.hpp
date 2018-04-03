@@ -1,12 +1,7 @@
-#ifndef DRIVING_MOTORS_HPP
-#define DRIVING_MOTORS_HPP
+#ifndef _DRIVING_MOTORS_HPP
+#define _DRIVING_MOTORS_HPP
 
-
-<<<<<<< HEAD:headers/driving_motors.hpp
 void init_motors();
-=======
-void initialize_motors ();
->>>>>>> master:driving_motors.hpp
 
 void straight (float speed, char f_r);
 
@@ -20,4 +15,4 @@ void reset_motors();
 
 void turn_on_place (char f_r,float corner);
 
-#endif
+#endif /* _DRIVING_MOTORS_H{{}}*/
