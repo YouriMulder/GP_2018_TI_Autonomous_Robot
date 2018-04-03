@@ -51,7 +51,8 @@ void follow_line_state() {
   if(!is_ultra_distance_enough()) {
     stop();
     dodge_object_state();
-  } else {
-    straight(current_speed, current_direction);
+  } else if(light_detect_line()) {
+      current_angle++;
   }
+  turn(current_speed, current_direction, current_angle);
 }
