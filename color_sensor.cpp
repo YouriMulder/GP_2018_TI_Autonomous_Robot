@@ -7,7 +7,7 @@ BrickPi3 BP_color;
 
 sensor_color_t sensorData;
 
-struct calibrate{
+struct calibrate_color {
     int max;
     int min;
 };

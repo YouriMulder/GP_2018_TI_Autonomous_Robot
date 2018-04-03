@@ -10,7 +10,7 @@ using namespace std;
 BrickPi3 BP_light;
 
 //struct to save the calibrateion
-struct calibrate{
+struct calibrate_light{
     int max;
     int min;
 };
