@@ -2,7 +2,11 @@
 #define DRIVING_MOTORS_HPP
 
 
+<<<<<<< HEAD:headers/driving_motors.hpp
 void init_motors();
+=======
+void initialize_motors ();
+>>>>>>> master:driving_motors.hpp
 
 void straight (float speed, char f_r);
 
