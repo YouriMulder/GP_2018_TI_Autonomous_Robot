@@ -1,13 +1,9 @@
 #ifndef _COLOR_SENSOR_HPP
 #define _COLOR_SENSOR_HPP
 
-#include "BrickPi3.h"
-#include "color_sensor.hpp"
-#include <iostream>
+#define PORT_2 0x02
 
 using namespace std;
-
-BrickPi3 BP_color;
 
 struct calibrate_color {
     int max;
@@ -15,18 +11,18 @@ struct calibrate_color {
 };
 
 //setup a color sensor. defauld port is PORT_2
-int set_color_sensor(const uint8_t & port = PORT_2);
+int set_color_sensor();
 
 //retrun value between 0 to 100. 0 is black, 100 is white.
-int color_get_reflection(sensor_color_t data, uint8_t port = PORT_2);
+int color_get_reflection();
 
 //get the color sensor data
-int read_color_sensor(sensor_color_t data, uint8_t port = PORT_2);
+int read_color_sensor();
 
 //check if the sensor sees black
-bool color_detect_line(sensor_color_t data, uint8_t port = PORT_2);
+bool color_detect_line();
 
 // reset min and max value for calibrate color
-void color_calibrate(sensor_color_t data, uint8_t port = PORT_2);
+void color_calibrate();
 
 #endif //_COLOR_SENSOR_HPP
