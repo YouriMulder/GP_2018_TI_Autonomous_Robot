@@ -8,7 +8,7 @@ BrickPi3 BP_light;
 
 sensor_light_t light_data;
 
-calibrate_light light = {1480, 2430};
+calibrate_light light = {1730, 2695};
 
 //setup a light sensor. defauld PORT_1 is PORT_1
 int set_light_sensor(){
@@ -34,7 +34,6 @@ bool light_detect_line(){
 int light_get_reflection(){
     BP_light.get_sensor(PORT_1, light_data);
     float reflection = light_data.reflected;
-    cout << "test1: " << reflection << "\n";
     reflection = (reflection - light.min)/(light.max - light.min) * 100;
     if(reflection < 0){
         reflection = 0;
@@ -68,6 +67,8 @@ void light_calibrate(){
         }
         usleep(100000);
     }
+	cout << "light max =" << max << endl;
+	cout << "light min =" << min << endl;
     light.max = max;
     light.min = min;
 }
