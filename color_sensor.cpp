@@ -1,9 +1,16 @@
 #include "BrickPi3.h"
 #include "color_sensor.hpp"
+#include <iostream>
 
 using namespace std;
 
 BrickPi3 BP_color;
+
+struct calibrate{
+    int max;
+    int min;
+};
+calibrate color = {430, 770};
 
 //setup a color sensor. defauld port is PORT_2
 int set_color_sensor(const uint8_t & port = PORT_2){
@@ -17,7 +24,7 @@ int color_get_reflection(sensor_color_t data, uint8_t port = PORT_2){
     cout << "test1: " << reflection << "\n";
     reflection += data.reflected_red;
     reflection += data.reflected_blue;
-    reflection = ((reflection / 3) - 430)/340 * 100;
+    reflection = ((reflection / 3) - color.min)/(color.max - color.min) * 100;
     if (reflection < 0){
         return 0;
     }
@@ -37,4 +44,42 @@ bool color_detect_line(sensor_color_t data, uint8_t port = PORT_2){
         return true;
     }
     return false;
+}
+
+// reset min and max value for calibrate color
+void color_calibrate(sensor_color_t data, uint8_t port = PORT_2){
+    float max = 0;
+    float min = 0;
+    float reflection = 0;
+    char temp;
+    cout << "put sensor on white\n";
+    cin >> temp;
+    for (int i = 0; i < 10; ++i) {
+        BP_lightget_sensor(port, data);
+        float reflected = data.reflected_green;
+        reflected += data.reflected_red;
+        reflected += data.reflected_blue;
+        reflected /= 3;
+        if(reflected < min || min == 0){
+            min = reflected;
+        }
+        usleep(100000);
+    }
+    cout << "put sensor on black\n";
+
+    cin >> temp;
+    for (int j = 0; j < 10; ++j) {
+        BP_lightget_sensor(port, data);
+        float reflected = data.reflected_green;
+        reflected += data.reflected_red;
+        reflected += data.reflected_blue;
+        reflected /= 3;
+        if(reflected > max || max == 0){
+            max = reflected;
+        }
+        usleep(100000);
+    }
+    cout << "min= " << min << "\nmax= " << max << "\n";
+    color.max = max;
+    color.min = min;
 }
