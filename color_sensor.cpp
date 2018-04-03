@@ -4,20 +4,26 @@
 #include <iostream>
 using namespace std;
 
+//define BrickPi3 library
 BrickPi3 BP_color;
 
+//define data
 sensor_color_t data;
 
+//define default color port
+uint8_t default_color_port = PORT_2;
+
+//define color calibration
 calibrate_color color = {430, 770};
 
 //setup a color sensor. defauld PORT_2 is PORT_2_2
-int set_color_sensor(){
-    return BP_color.set_sensor_type(PORT_2, SENSOR_TYPE_NXT_COLOR_FULL);
+int set_color_sensor(uint8_t port = default_color_port){
+    return BP_color.set_sensor_type(port, SENSOR_TYPE_NXT_COLOR_FULL);
 }
 
 //retrun value between 0 to 100. 0 is black, 100 is white.
-int color_get_reflection(){
-    BP_color.get_sensor(PORT_2, data);
+int color_get_reflection(uint8_t port = default_color_port){
+    BP_color.get_sensor(port, data);
     float reflection = data.reflected_green;
     cout << "test1: " << reflection << "\n";
     reflection += data.reflected_red;
@@ -31,14 +37,14 @@ int color_get_reflection(){
 }
 
 //get the color sensor data
-int read_color_sensor(){
-    BP_color.get_sensor(PORT_2, data);
+int read_color_sensor(uint8_t port = default_color_port){
+    BP_color.get_sensor(port, data);
     return data.color;
 }
 
 //check if the sensor sees black
-bool color_detect_line(){
-    int result = read_color_sensor();
+bool color_detect_line(uint8_t port = default_color_port){
+    int result = read_color_sensor(port);
     if(result == 1){
         return true;
     }
@@ -46,14 +52,14 @@ bool color_detect_line(){
 }
 
 // reset min and max value for calibrate color
-void color_calibrate(){
+void color_calibrate(uint8_t port = default_color_port){
     float max = 0;
     float min = 0;
     char temp;
     cout << "put sensor on white\n";
     cin >> temp;
     for (int i = 0; i < 10; ++i) {
-        BP_color.get_sensor(PORT_2, data);
+        BP_color.get_sensor(port, data);
         float reflected = data.reflected_green;
         reflected += data.reflected_red;
         reflected += data.reflected_blue;
@@ -67,7 +73,7 @@ void color_calibrate(){
 
     cin >> temp;
     for (int j = 0; j < 10; ++j) {
-        BP_color.get_sensor(PORT_2, data);
+        BP_color.get_sensor(port, data);
         float reflected = data.reflected_green;
         reflected += data.reflected_red;
         reflected += data.reflected_blue;
