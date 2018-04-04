@@ -3,11 +3,6 @@
 
 using namespace std;
 
-#include <string>
-
-//read calibration from calibration_save file and save data to calibration struct
-void light_read_and_set_calibration_save();
-
 //struct to save the calibrateion
 struct calibrate_light{
     int max;
