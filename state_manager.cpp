@@ -1,5 +1,6 @@
 #include <thread>
 #include <chrono>
+#include <ctime>
 #include <iostream>
 #include <unistd.h>
 #include "headers/state_manager.hpp"
@@ -39,21 +40,31 @@ void set_current_direction(const char& direction) {
 }
 // ------------------
 
-void dodge_object_state() {
-  set_motor_ultra_right();
-  current_angle = 90;
-  turn_on_place(current_direction, current_angle);
-  current_angle = 0;
-  std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-  set_motor_ultra_straight();
-  straight(current_speed, current_direction);
+bool random_bool() {
+  sreed(time(NULL));
+  return rand() % 2;
+}
+
+// side 0 == left | side 1 == right
+void dodge_object_state(const char& movement) {
+  int degrees = 90;
+  bool side = random_bool();
+
+  if(!is_ultra_distance_enough() // add red line) {
+    stop();
+    if(side) {
+      degrees *= -1;
+    }
+    turn_on_place(movement, degrees);
+    turn_motor_ultra(degrees * -1);
+  }
 }
 
 void follow_line_state() {
 		  //if(!is_ultra_distance_enough()) {
 			//stop();
 			//dodge_object_state();
-		  //} 
+		  //}
 		  if (light_get_reflection()>color_get_reflection()){
 			  int l_ref = light_get_reflection();
 			  current_angle = l_ref;
@@ -63,7 +74,7 @@ void follow_line_state() {
 			  }
 			  else if (l_ref>75){
 				  current_angle *=6;
-				 
+
 			  }
 			  else if (l_ref>50){
 				  current_angle *=4;
@@ -89,10 +100,10 @@ void follow_line_state() {
 			  else if (c_ref>25){
 				  current_angle *=2;
 			  }
-			  
+
 			  current_angle = -1*color_get_reflection();
 		  }
-		
+
 		  cout << current_angle << endl;
 		turn(current_speed, current_direction, current_angle*2);
 }

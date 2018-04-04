@@ -81,7 +81,7 @@ bool is_ultra_distance_enough() {
   return !(distance > 0 && distance < min_ultra_distance);
 }
 
-// sets up the ultrasonic sensor and the motor where it's attached to 
+// sets up the ultrasonic sensor and the motor where it's attached to
 void init_ultra_sensor() {
   int detect = BP_ultra.detect();
   int sensor_type = BP_ultra.set_sensor_type(ULTRASONIC, SENSOR_TYPE_NXT_ULTRASONIC);
