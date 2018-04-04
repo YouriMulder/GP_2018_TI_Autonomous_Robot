@@ -8,7 +8,7 @@ BrickPi3 BP_color;
 
 sensor_color_t data;
 
-calibrate_color color = {370, 672};
+calibrate_color color = {447, 661};
 
 //setup a color sensor. defauld PORT_2 is PORT_2_2
 int set_color_sensor(){
@@ -26,7 +26,6 @@ int color_get_reflection(){
     if (reflection < 0){
         return 0;
     }
-
 	if(reflection > 100){
       reflection = 100;
     }

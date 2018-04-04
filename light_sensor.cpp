@@ -8,7 +8,7 @@ BrickPi3 BP_light;
 
 sensor_light_t light_data;
 
-calibrate_light light = {1730, 2695};
+calibrate_light light = {1877, 2609};
 
 //setup a light sensor. defauld PORT_1 is PORT_1
 int set_light_sensor(){
@@ -34,6 +34,7 @@ bool light_detect_line(){
 int light_get_reflection(){
     BP_light.get_sensor(PORT_1, light_data);
     float reflection = light_data.reflected;
+   
     reflection = (reflection - light.min)/(light.max - light.min) * 100;
     if(reflection < 0){
         reflection = 0;
