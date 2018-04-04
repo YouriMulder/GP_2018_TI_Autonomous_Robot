@@ -2,6 +2,8 @@
 #include "headers/color_sensor.hpp"
 #include <unistd.h>
 #include <iostream>
+#include <string>
+#include <fstream>
 using namespace std;
 
 BrickPi3 BP_color;
@@ -9,6 +11,47 @@ BrickPi3 BP_color;
 sensor_color_t data;
 
 calibrate_color color = {447, 661};
+
+//check if substring is in string
+bool find_sub_string(string str, string sub){
+    while (str.find(sub) != string::npos){
+        return true;
+    }
+    return false;
+}
+
+//remove substring from string
+string remove_sub_str(string str, string sub){
+    while (str.find(sub) != string::npos){
+        str.erase(str.find(sub), sub.length());
+    }
+    return str;
+}
+
+//read calibration from calibration_save file and save data to calibration struct
+void read_and_set_calibration_save(){
+    ifstream readFile ("calibration_save");
+    int max_color = 0;
+    int min_color = 0;
+    string line;
+    if (readFile.is_open()){
+        while (getline(readFile, line)) {
+            if(find_sub_string(line, "max_color:")){
+                line = remove_sub_str(line, "max_color:");
+                max_color = atoi(remove_sub_str(line, "\n:").c_str());
+            }
+            if(find_sub_string(line, "min_color:")){
+                line = remove_sub_str(line, "min_color:");
+                min_color = atoi(remove_sub_str(line, "\n:").c_str());
+            }
+        }
+        readFile.close();
+        cout << max_color << "\n" << min_color << "\n";
+        color = {min_color, max_color};
+    }else{
+        cout << "can't read calibration_save\n";
+    }
+}
 
 //setup a color sensor. defauld PORT_2 is PORT_2_2
 int set_color_sensor(){
