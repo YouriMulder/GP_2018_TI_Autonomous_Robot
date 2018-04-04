@@ -37,7 +37,6 @@ void color_read_and_set_calibration_save(){
         cout << "can't read calibration_save\n";
     }
 }
-
 //setup a color sensor. defauld PORT_2 is PORT_2_2
 int set_color_sensor(){
     return BP_color.set_sensor_type(PORT_2, SENSOR_TYPE_NXT_COLOR_FULL);

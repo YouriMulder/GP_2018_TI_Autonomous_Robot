@@ -9,6 +9,7 @@ using namespace std;
 #define ULTRASONIC PORT_4
 
 // minimum distance
+
 int min_ultra_distance = 10;
 #define default_min_ultra_distance 20
 

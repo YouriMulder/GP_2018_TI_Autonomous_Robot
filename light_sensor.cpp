@@ -38,7 +38,7 @@ void light_read_and_set_calibration_save(){
     }
 }
 
-//setup a light sensor. defauld PORT_1 is PORT_1
+//setup a light sensor. default PORT_1 is PORT_1
 int set_light_sensor(){
     return BP_light.set_sensor_type(PORT_1, SENSOR_TYPE_NXT_LIGHT_ON);
 }

@@ -127,3 +127,35 @@ void follow_line_state() {
     turn_on_place(current_direction, avg_angles);
   }
 }
+
+float update_vect(int & current_angle){
+	float sum =0;
+	angles[index]=current_angle;
+		 for (unsigned int i=0;i<angles.size();i++){
+			 sum += angles[i];
+		 }	  
+	float avg_angles = sum/angles.size();
+		  if (index ==5){
+			  index =0;
+		  }
+		  else{
+			index++;
+		  }
+	return avg_angles;
+}
+
+void follow_line_state() {
+			
+		  if(!is_ultra_distance_enough()) {
+			stop();
+			dodge_object_state();
+			} 
+		  if (light_get_reflection()>color_get_reflection()){
+			  current_angle = light_get_reflection();
+		  }
+		  else {
+			  current_angle = -1* color_get_reflection();
+		  }
+		avg_angles = update_vect(current_angle);
+		turn(current_speed, current_direction, avg_angles);
+}
