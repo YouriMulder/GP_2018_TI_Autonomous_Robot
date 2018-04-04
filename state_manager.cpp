@@ -100,7 +100,7 @@ float update_vect(int & current_angle){
 }
 
 void follow_line_state() {
-
+	current_speed = 50;
 		  if(!is_ultra_distance_enough()) {
 			stop();
 			dodge_object_state('f');
@@ -115,47 +115,22 @@ void follow_line_state() {
 
     if(avg_angles > 5 && avg_angles < 15) {
       avg_angles = 5;
-    } else if(avg_angles < -5 && avg_angles > -15) {
+    }
+	else if(avg_angles < -5 && avg_angles > -15) {
       avg_angles = -5;
     }
-    cout << avg_angles << endl;
+	else if(avg_angles >= 15 &&  avg_angles < 75){
+		current_speed = current_speed - 0.3*current_angle;
+	}
+	else if(avg_angles < -15 && avg_angles > -75){
+		current_speed = current_speed - (-1*0.3*current_angle);
+	}
+    cout << current_speed << endl;
 
 
-    if(avg_angles > -90 && avg_angles < 90) {
+    if(current_angle > -90 && current_angle < 90) {
 		turn(current_speed, current_direction, avg_angles);
   } else {
-    turn_on_place(current_direction, avg_angles);
+		turn_on_place(current_direction, current_angle);
   }
-}
-
-float update_vect(int & current_angle){
-	float sum =0;
-	angles[index]=current_angle;
-		 for (unsigned int i=0;i<angles.size();i++){
-			 sum += angles[i];
-		 }	  
-	float avg_angles = sum/angles.size();
-		  if (index ==5){
-			  index =0;
-		  }
-		  else{
-			index++;
-		  }
-	return avg_angles;
-}
-
-void follow_line_state() {
-			
-		  if(!is_ultra_distance_enough()) {
-			stop();
-			dodge_object_state();
-			} 
-		  if (light_get_reflection()>color_get_reflection()){
-			  current_angle = light_get_reflection();
-		  }
-		  else {
-			  current_angle = -1* color_get_reflection();
-		  }
-		avg_angles = update_vect(current_angle);
-		turn(current_speed, current_direction, avg_angles);
 }
