@@ -36,6 +36,7 @@ int light_get_reflection();
 /**
  * @brief reset min and max value of calibrate light
  */
+
 void light_calibrate();
 
 #endif //_LIGHT_SENSOR_HPP

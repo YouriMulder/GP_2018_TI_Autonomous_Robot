@@ -46,7 +46,7 @@ void set_current_direction(const char& direction) {
 // ------------------
 
 bool random_bool() {
-  sreed(time(NULL));
+  srand(time(NULL));
   return rand() % 2;
 }
 
@@ -55,13 +55,76 @@ void dodge_object_state(const char& movement) {
   int degrees = 90;
   bool side = random_bool();
 
-  if(!is_ultra_distance_enough() // add red line) {
+  set_min_ultra_distance(get_min_ultra_distance() + 10);
+
+  if(!is_ultra_distance_enough()) { // add red line)
     stop();
     if(side) {
       degrees *= -1;
     }
+
     turn_on_place(movement, degrees);
     turn_motor_ultra(degrees * -1);
+    std::this_thread::sleep_for (std::chrono::seconds(5));
+
+    while(!is_ultra_distance_enough()) {
+      straight(current_speed, movement);
+    }
+
+    std::this_thread::sleep_for(std::chrono::seconds(1));
+
+    //while(!is_ultra_distance_enough) {}
+
+    //turn_on_place(movement, degrees * -1);
+    stop();
+    turn_motor_ultra(degrees);
+    set_min_ultra_distance(get_default_min_ultra_distance());
+    std::this_thread::sleep_for (std::chrono::seconds(5));
+  }
+}
+
+float update_vect(int & current_angle){
+	float sum =0;
+	angles[index]=current_angle;
+		 for (unsigned int i=0;i<angles.size();i++){
+			 sum += angles[i];
+		 }
+	float avg_angles = sum/angles.size();
+		  if (index ==5){
+			  index =0;
+		  }
+		  else{
+			index++;
+		  }
+	return avg_angles;
+}
+
+void follow_line_state() {
+
+		  if(!is_ultra_distance_enough()) {
+			stop();
+			dodge_object_state('f');
+			}
+		  if (light_get_reflection()>color_get_reflection()){
+			  current_angle = light_get_reflection();
+		  }
+		  else {
+			  current_angle = -1 * color_get_reflection();
+		  }
+		avg_angles = update_vect(current_angle);
+
+    if(avg_angles > 5 && avg_angles < 15) {
+      avg_angles = 5;
+    } else if(avg_angles < -5 && avg_angles > -15) {
+      avg_angles = -5;
+    }
+    cout << avg_angles << endl;
+
+
+    if(avg_angles > -90 && avg_angles < 90) {
+		turn(current_speed, current_direction, avg_angles);
+  } else {
+    turn_on_place(current_direction, avg_angles);
   }
 }
 

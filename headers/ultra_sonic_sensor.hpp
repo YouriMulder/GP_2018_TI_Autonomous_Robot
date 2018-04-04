@@ -3,6 +3,10 @@
 
 void exit_signal_handler(int signo);
 
+int get_min_ultra_distance();
+void set_min_ultra_distance(const int& value);
+int get_default_min_ultra_distance();
+
 /**
  * @brief resets the motor offset
  */
