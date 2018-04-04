@@ -1,5 +1,6 @@
 #include <thread>
 #include <chrono>
+#include <ctime>
 #include <iostream>
 #include <unistd.h>
 #include <vector>
@@ -44,14 +45,24 @@ void set_current_direction(const char& direction) {
 }
 // ------------------
 
-void dodge_object_state() {
-  set_motor_ultra_right();
-  current_angle = 90;
-  turn_on_place(current_direction, current_angle);
-  current_angle = 0;
-  std::this_thread::sleep_for(std::chrono::milliseconds(3000));
-  set_motor_ultra_straight();
-  straight(current_speed, current_direction);
+bool random_bool() {
+  sreed(time(NULL));
+  return rand() % 2;
+}
+
+// side 0 == left | side 1 == right
+void dodge_object_state(const char& movement) {
+  int degrees = 90;
+  bool side = random_bool();
+
+  if(!is_ultra_distance_enough() // add red line) {
+    stop();
+    if(side) {
+      degrees *= -1;
+    }
+    turn_on_place(movement, degrees);
+    turn_motor_ultra(degrees * -1);
+  }
 }
 
 float update_vect(int & current_angle){
@@ -71,7 +82,6 @@ float update_vect(int & current_angle){
 }
 
 void follow_line_state() {
-				
 			
 		  if(!is_ultra_distance_enough()) {
 			stop();
@@ -85,5 +95,4 @@ void follow_line_state() {
 		  }
 		avg_angles = update_vect(current_angle);
 		turn(current_speed, current_direction, avg_angles);
-		
 }
