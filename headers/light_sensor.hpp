@@ -9,19 +9,33 @@ struct calibrate_light{
     int min;
 };
 
-//setup a light sensor. defauld port is PORT_1
+/**
+ * @brief setup a light sensor. default port is PORT_1
+ * @return error code
+ */
 int set_light_sensor();
 
-//get light sensor data.
+/**
+ * @brief get light sensor data
+ * @return light sensor data
+ */
 int read_light_sensor();
 
-//check if the sensor sees black
+/**
+ * @brief check if the sensor detects black
+ * @return boolean true for black false for white e.g.
+ */
 bool light_detect_line();
 
-//return value between 0 and 100. 100 is white, 0 is black
+/**
+ * @brief get light reflection value from sensor 
+ * @return return value between 0 and 100. 0 is blask, 100 is white
+ */
 int light_get_reflection();
 
-// reset min and max value of calibrate light
+/**
+ * @brief reset min and max value of calibrate light
+ */
 void light_calibrate();
 
 #endif //_LIGHT_SENSOR_HPP
