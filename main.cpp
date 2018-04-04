@@ -37,6 +37,7 @@ int main() {
 	int start =0;
 	cout << "start driving" <<endl;
 	cin >> start;
+
 	if (start ==1){
   while(robot_active) {
     follow_line_state();
