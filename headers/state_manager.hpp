@@ -1,6 +1,5 @@
 #ifndef _STATE_MANAGER_HPP
 #define _STATE_MANAGER_HPP
-#include <vector>
 using namespace std;
 
 int get_current_speed();
