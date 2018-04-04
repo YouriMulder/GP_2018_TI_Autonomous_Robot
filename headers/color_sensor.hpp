@@ -12,14 +12,8 @@ struct calibrate_color {
     int min;
 };
 
-//check if substring is in string
-bool find_sub_string(string str, string sub);
-
-//remove substring from string
-string remove_sub_str(string str, string sub);
-
 //read calibration from calibration_save file and save data to calibration struct
-void read_and_set_calibration_save();
+void color_read_and_set_calibration_save();
 
 //setup a color sensor. defauld port is PORT_2
 int set_color_sensor();

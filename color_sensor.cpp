@@ -1,5 +1,6 @@
 #include "BrickPi3/BrickPi3.h"
 #include "headers/color_sensor.hpp"
+#include "headers/general_functions.hpp"
 #include <unistd.h>
 #include <iostream>
 #include <string>
@@ -12,24 +13,8 @@ sensor_color_t data;
 
 calibrate_color color = {447, 661};
 
-//check if substring is in string
-bool find_sub_string(string str, string sub){
-    while (str.find(sub) != string::npos){
-        return true;
-    }
-    return false;
-}
-
-//remove substring from string
-string remove_sub_str(string str, string sub){
-    while (str.find(sub) != string::npos){
-        str.erase(str.find(sub), sub.length());
-    }
-    return str;
-}
-
 //read calibration from calibration_save file and save data to calibration struct
-void read_and_set_calibration_save(){
+void color_read_and_set_calibration_save(){
     ifstream readFile ("calibration_save");
     int max_color = 0;
     int min_color = 0;
