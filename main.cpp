@@ -8,6 +8,8 @@
 #include "headers/driving_motors.hpp"
 #include "headers/state_manager.hpp"
 #include "headers/touch_sensor.hpp"
+#include "headers/light_sensor.hpp"
+#include "headers/color_sensor.hpp"
 using namespace std;
 
 bool robot_active = true;
@@ -20,6 +22,10 @@ void init_all() {
   init_ultra_sensor();
   init_motors();
   init_touch();
+  set_light_sensor();
+  //light_calibrate();
+  set_color_sensor();
+  //color_calibrate();
 }
 
 int main() {
@@ -28,12 +34,15 @@ int main() {
   signal(SIGINT, exit_signal_handler);
   init_all();
   reset_motors();
+	int start =0;
+	cout << "start driving" <<endl;
+	cin >> start;
 
-  straight(get_current_speed(), get_current_direction());
-
+	if (start ==1){
   while(robot_active) {
     follow_line_state();
   }
+	}
 }
 
 void exit_signal_handler(int signo) {
