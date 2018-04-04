@@ -5,7 +5,7 @@ using namespace std;
 
 BrickPi3 BP_light;
 
-//setup a light sensor. defauld port is PORT_1
+//setup a light sensor. default port is PORT_1.
 int set_light_sensor(const uint8_t & port = PORT_1){
     return BP_light.set_sensor_type(port, SENSOR_TYPE_NXT_LIGHT_ON);
 }
