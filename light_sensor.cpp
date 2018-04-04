@@ -1,7 +1,10 @@
 #include "BrickPi3/BrickPi3.h"
 #include "headers/light_sensor.hpp"
+#include "headers/general_functions.hpp"
 #include <iostream>
 #include <unistd.h>
+#include <fstream>
+#include <string>
 using namespace std;
 
 BrickPi3 BP_light;
@@ -9,6 +12,31 @@ BrickPi3 BP_light;
 sensor_light_t light_data;
 
 calibrate_light light = {1877, 2609};
+
+//read calibration from calibration_save file and save data to calibration struct
+void light_read_and_set_calibration_save(){
+    ifstream readFile ("calibration_save");
+    int max_light = 0;
+    int min_light = 0;
+    string line;
+    if (readFile.is_open()){
+        while (getline(readFile, line)) {
+            if(find_sub_string(line, "max_light:")){
+                line = remove_sub_str(line, "max_light:");
+                max_light = atoi(remove_sub_str(line, "\n:").c_str());
+            }
+            if(find_sub_string(line, "min_light:")){
+                line = remove_sub_str(line, "min_light:");
+                min_light = atoi(remove_sub_str(line, "\n:").c_str());
+            }
+        }
+        readFile.close();
+        cout << max_light << "\n" << min_light << "\n";
+        light = {min_light, max_light};
+    }else{
+        cout << "can't read calibration_save\n";
+    }
+}
 
 //setup a light sensor. defauld PORT_1 is PORT_1
 int set_light_sensor(){
