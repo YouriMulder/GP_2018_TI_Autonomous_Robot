@@ -10,6 +10,6 @@ void init_touch();
  * @brief get touch sensor data
  * @return sensor is pressed
  */
-int return_data();
+int get_touch_data();
 
 #endif /* _TOUCH_SENSOR_HPP */

@@ -22,14 +22,14 @@ void init_motors(){
 	 * @param f_r is a char that defines the direction of the motors 'f' means forward, 'r' means revers
 	 * */
 void straight (float speed, char f_r) {
-	speed = speed *32.767;
+	speed = speed * 32.767 / 5 ;
 	if (f_r == 'f') {
-		BP_wheels.set_motor_dps(L,speed);
-		BP_wheels.set_motor_dps(R,speed+3);
+		BP_wheels.set_motor_dps(L,speed - 0.01525 * speed);
+		BP_wheels.set_motor_dps(R,speed);
 	}
 	else if(f_r == 'r'){
-		BP_wheels.set_motor_dps(L,speed*-1);
-		BP_wheels.set_motor_dps(R,speed*-1-3);
+		BP_wheels.set_motor_dps(L,speed*-1 - 0.01525 * speed);
+		BP_wheels.set_motor_dps(R,speed*-1);
 	}
 }
 
@@ -83,7 +83,7 @@ void turn(float speed, char f_r, float corner){
 }
 
 void reset_motors(){
-	free(); 
+	free();
 }
 
 /**

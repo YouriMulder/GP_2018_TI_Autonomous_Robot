@@ -13,7 +13,7 @@ void init_touch() {
 	BP_touch.set_sensor_type(PORT_3, SENSOR_TYPE_TOUCH);
 }
 
-int return_data() {
+int get_touch_data() {
 	BP_touch.get_sensor(PORT_3, sensor_touch);
 	return sensor_touch.pressed;
 }

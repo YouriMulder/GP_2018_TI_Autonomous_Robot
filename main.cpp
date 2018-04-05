@@ -28,6 +28,21 @@ void init_all() {
   //color_calibrate();
 }
 
+void calibrate_ultra_sonic_motor(const int& touch_to_middle_degrees) {
+  while(true) {
+    turn_motor_ultra(-10);
+    if(get_touch_data()) {
+      reset_motor_ultra_offset();
+      turn_motor_ultra(touch_to_middle_degrees);
+      std::this_thread::sleep_for(std::chrono::seconds(1));
+
+      reset_motor_ultra_offset();
+
+      break;
+    }
+  }
+}
+
 int main() {
   cout << "Starting bot" << endl;
 
@@ -39,10 +54,11 @@ int main() {
 	cin >> start;
 
 	if (start ==1){
-  while(robot_active) {
-    follow_line_state();
+    calibrate_ultra_sonic_motor(90);
+    while(robot_active) {
+      follow_line_state();
+    }
   }
-	}
 }
 
 void exit_signal_handler(int signo) {
@@ -50,7 +66,7 @@ void exit_signal_handler(int signo) {
     reset_motors();
     set_motor_ultra_straight();
     BP_main.reset_all();
-    std::this_thread::sleep_for(std::chrono::milliseconds(3000));
+    std::this_thread::sleep_for(std::chrono::seconds(1));
 
     exit(-2);
   }
