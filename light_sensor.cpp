@@ -15,26 +15,30 @@ calibrate_light light = {1877, 2609};
 
 //read calibration from calibration_save file and save data to calibration struct
 void light_read_and_set_calibration_save(){
-    ifstream readFile ("calibration_save");
-    int max_light = 0;
-    int min_light = 0;
-    string line;
-    if (readFile.is_open()){
-        while (getline(readFile, line)) {
-            if(find_sub_string(line, "max_light:")){
-                line = remove_sub_str(line, "max_light:");
-                max_light = atoi(remove_sub_str(line, "\n:").c_str());
+    try {
+        ifstream readFile ("calibration_save");
+        int max_light = 0;
+        int min_light = 0;
+        string line;
+        if (readFile.is_open()){
+            while (getline(readFile, line)) {
+                if(find_sub_string(line, "max_light:")){
+                    line = remove_sub_str(line, "max_light:");
+                    max_light = atoi(remove_sub_str(line, "\n:").c_str());
+                }
+                if(find_sub_string(line, "min_light:")){
+                    line = remove_sub_str(line, "min_light:");
+                    min_light = atoi(remove_sub_str(line, "\n:").c_str());
+                }
             }
-            if(find_sub_string(line, "min_light:")){
-                line = remove_sub_str(line, "min_light:");
-                min_light = atoi(remove_sub_str(line, "\n:").c_str());
-            }
+            readFile.close();
+            cout << max_light << "\n" << min_light << "\n";
+            light = {min_light, max_light};
+        }else{
+            cout << "can't read calibration_save\n";
         }
-        readFile.close();
-        cout << max_light << "\n" << min_light << "\n";
-        light = {min_light, max_light};
-    }else{
-        cout << "can't read calibration_save\n";
+    } catch (int e){
+        cout << "something went wrong, does calibration_save file exist";
     }
 }
 
