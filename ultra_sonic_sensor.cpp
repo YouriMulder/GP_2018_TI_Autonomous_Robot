@@ -9,7 +9,6 @@ using namespace std;
 #define ULTRASONIC PORT_4
 
 // minimum distance
-
 int min_ultra_distance = 10;
 #define default_min_ultra_distance 20
 
@@ -96,4 +95,5 @@ void init_ultra_sensor() {
   int sensor_type = BP_ultra.set_sensor_type(ULTRASONIC, SENSOR_TYPE_NXT_ULTRASONIC);
   set_motor_ultra_start_pos();
   reset_motor_ultra_offset();
+  BP_ultra.set_motor_limits(MOTOR, 50, 100);
 }

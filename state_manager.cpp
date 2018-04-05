@@ -12,8 +12,8 @@
 using namespace std;
 
 vector<float> angles ={0,0,0};
-int index =0;
-float avg_angles;
+int index = 0;
+float avg_angle;
 
 int current_speed = 50;
 int current_angle = 0;
@@ -71,7 +71,7 @@ void dodge_object_state(const char& movement) {
       straight(current_speed, movement);
     }
 
-    std::this_thread::sleep_for(std::chrono::seconds(1));
+    this_thread::sleep_for(chrono::seconds(1));
 
     //while(!is_ultra_distance_enough) {}
 
@@ -79,7 +79,7 @@ void dodge_object_state(const char& movement) {
     stop();
     turn_motor_ultra(degrees);
     set_min_ultra_distance(get_default_min_ultra_distance());
-    std::this_thread::sleep_for (std::chrono::seconds(5));
+    this_thread::sleep_for(chrono::seconds(5));
   }
 }
 
@@ -89,48 +89,52 @@ float update_vect(int & current_angle){
 		 for (unsigned int i=0;i<angles.size();i++){
 			 sum += angles[i];
 		 }
-	float avg_angles = sum/angles.size();
+	float avg_angle = sum/angles.size();
 		  if (index ==5){
 			  index =0;
 		  }
 		  else{
 			index++;
 		  }
-	return avg_angles;
+	return avg_angle;
+}
+
+void move_ultra_sensor_slow(const int& value) {
+
 }
 
 void follow_line_state() {
-	current_speed = 50;
-		  if(!is_ultra_distance_enough()) {
-			stop();
-			dodge_object_state('f');
-			}
-		  if (light_get_reflection()>color_get_reflection()){
-			  current_angle = light_get_reflection();
-		  }
-		  else {
-			  current_angle = -1 * color_get_reflection();
-		  }
-		avg_angles = update_vect(current_angle);
+  if(!is_ultra_distance_enough()) {
+		stop();
+    dodge_object_state('f');
+  }
 
-    if(avg_angles > 5 && avg_angles < 15) {
-      avg_angles = 5;
-    }
-	else if(avg_angles < -5 && avg_angles > -15) {
-      avg_angles = -5;
-    }
-	else if(avg_angles >= 15 &&  avg_angles < 75){
+  if (light_get_reflection()>color_get_reflection()){
+	  current_angle = light_get_reflection();
+  }
+  else {
+	  current_angle = -1 * color_get_reflection();
+  }
+
+	avg_angle = update_vect(current_angle);
+
+  if(avg_angle > 5 && avg_angle < 15) {
+    avg_angle = 5;
+  }
+	else if(avg_angle < -5 && avg_angle > -15) {
+    avg_angle = -5;
+  }
+  else if(avg_angle >= 15 &&  avg_angle < 75){
 		current_speed = current_speed - 0.3*current_angle;
 	}
-	else if(avg_angles < -15 && avg_angles > -75){
+	else if(avg_angle < -15 && avg_angle > -75){
 		current_speed = current_speed - (-1*0.3*current_angle);
 	}
-    cout << current_speed << endl;
 
-
-    if(current_angle > -90 && current_angle < 90) {
-		turn(current_speed, current_direction, avg_angles);
+  if(current_angle > -90 && current_angle < 90) {
+		turn(current_speed, current_direction, avg_angle);
+    set_motor_ultra_position(avg_angle);
   } else {
-		turn_on_place(current_direction, current_angle);
+    turn_on_place(current_direction, current_angle);
   }
 }
