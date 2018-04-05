@@ -61,9 +61,10 @@ void turn_to_object(const char& movement, const int& degrees, const bool& ultra_
 }
 
 void trace_object(const char& movement, const int& speed) {
+  int smallest_distance = get_ultra_distance();
   straight(speed, movement);
   while(!is_ultra_distance_enough()) {
-    cout << "tracing" << endl;
+    turn(speed, movement, 10 * (get_ultra_distance() - smallest_distance));
   }
   stop();
 }
@@ -183,5 +184,5 @@ void follow_line_state() {
     turn_on_place(current_direction, current_angle);
 	  straight(current_direction,current_speed);
   }
-  usleep(100);
+  usleep(5000);
 }

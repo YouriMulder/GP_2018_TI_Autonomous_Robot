@@ -2,6 +2,7 @@
 #include <thread>
 #include <signal.h>
 #include <iostream>
+#include <unistd.h>
 #include "BrickPi3/BrickPi3.h"
 
 #include "headers/ultra_sonic_sensor.hpp"
@@ -53,7 +54,7 @@ int main() {
 	cout << "start driving" <<endl;
 	cin >> start;
 
-	if (start ==1){
+	if(start ==1) {
     calibrate_ultra_sonic_motor(90);
     while(robot_active) {
       follow_line_state();
