@@ -42,24 +42,26 @@ void calibrate_line_sensors(){
     cin >> choice;
     //sensors on black
     for (int i = 0; i < 10; ++i) {
+
         BP_calibrate.get_sensor(PORT_2, calibrate_color_data);
         float reflected = calibrate_color_data.reflected_green;
         reflected += calibrate_color_data.reflected_red;
         reflected += calibrate_color_data.reflected_blue;
         reflected /= 3;
-        if(reflected > max_color || max_color == 0){
-            max_color = reflected;
+        if(reflected < min_color || min_color == 0){
+            min_color = reflected;
         }
 
         BP_calibrate.get_sensor(PORT_1, calibrate_light_data);
-        if(calibrate_light_data.reflected > max_light || max_light == 0){
-            max_light = calibrate_light_data.reflected;
+        if(calibrate_light_data.reflected < min_light || min_light == 0){
+            min_light = calibrate_light_data.reflected;
         }
+
         usleep(100000);
     }
     //sensors on white
     if(choice == 'y'){
-        straight(25, 'f');
+        straight(5, 'f');
         usleep(300000);
         stop();
     } else {
@@ -74,13 +76,13 @@ void calibrate_line_sensors(){
         reflected += calibrate_color_data.reflected_red;
         reflected += calibrate_color_data.reflected_blue;
         reflected /= 3;
-        if(reflected < min_color || min_color == 0){
-            min_color = reflected;
+        if(reflected > max_color || max_color == 0){
+            max_color = reflected;
         }
 
         BP_calibrate.get_sensor(PORT_1, calibrate_light_data);
-        if(calibrate_light_data.reflected < min_light || min_light == 0){
-            min_light = calibrate_light_data.reflected;
+        if(calibrate_light_data.reflected > max_light || max_light == 0){
+            max_light = calibrate_light_data.reflected;
         }
 
         usleep(100000);
