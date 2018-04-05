@@ -67,11 +67,11 @@ void turn(float speed, char f_r, float corner){
 	}
 
 	if (corner>0){
-		left_motor = speed + 0.5*(speed * corner);
+		left_motor = speed + 0.3*(speed * corner);
 		right_motor = speed - 0.5*(speed * corner);
 	} else if (corner<0){
 		corner = corner *-1;
-		right_motor = speed + 0.5*(speed * corner);
+		right_motor = speed + 0.3*(speed * corner);
 		left_motor = speed -0.5*(speed * corner);
 	} else {
 		left_motor = speed;
