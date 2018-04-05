@@ -54,7 +54,7 @@ void free () {
   * @param f_r defines the direction of the robot 'f' means forward 'r' means backwards(reverse)
   * @param corner defines how much the robot needs to corner a higher value means a more tight corner and a lower value means a shallow corner
 	*/
-void turn (float speed, char f_r, float corner){
+void turn(float speed, char f_r, float corner){
 	float left_motor;
 	float right_motor;
 	BP_wheels.set_motor_limits(L,80,1200);
@@ -62,38 +62,20 @@ void turn (float speed, char f_r, float corner){
 	speed = speed/5;
 	speed = speed * 32.767;
 	corner = corner /18;
-	if (f_r == 'f'){
-		if (corner == 0){
-			left_motor = speed;
-			right_motor = speed;
-		}
-		if (corner>0){
-			left_motor = speed + 0.5*(speed * corner);
-			right_motor = speed - 0.5*(speed * corner);
-		}
-
-		if (corner<0){
-			corner = corner *-1;
-			right_motor = speed + 0.5*(speed * corner);
-			left_motor = speed -0.5*(speed * corner);
-		}
+	if (f_r == 'r'){
+				speed = speed*-1;
 	}
-	else if (f_r == 'r'){
-		speed = speed*-1;
-		if (corner == 0){
-			left_motor = speed;
-			right_motor = speed;
-		}
-		if (corner>0){
-			left_motor = speed + (speed * corner);
-			right_motor = speed;
-		}
 
-		if (corner<0){
-			corner = corner *-1;
-			right_motor = speed + (speed * corner);
-			left_motor = speed;
-		}
+	if (corner>0){
+		left_motor = speed + 0.3*(speed * corner);
+		right_motor = speed - 0.5*(speed * corner);
+	} else if (corner<0){
+		corner = corner *-1;
+		right_motor = speed + 0.3*(speed * corner);
+		left_motor = speed -0.5*(speed * corner);
+	} else {
+		left_motor = speed;
+		right_motor = speed;
 	}
 
 	BP_wheels.set_motor_dps(L,left_motor);
@@ -101,7 +83,7 @@ void turn (float speed, char f_r, float corner){
 }
 
 void reset_motors(){
-	free();
+	free(); 
 }
 
 /**

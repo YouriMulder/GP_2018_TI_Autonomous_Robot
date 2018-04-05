@@ -9,9 +9,18 @@ using namespace std;
 #define ULTRASONIC PORT_4
 
 // minimum distance
-#define min_ultra_distance 20
+int min_ultra_distance = 10;
+#define default_min_ultra_distance 20
 
 BrickPi3 BP_ultra;
+
+// get the minimum distance there may be between a object and the robot
+int get_min_ultra_distance() { return min_ultra_distance; }
+
+// set the minimum distance there may be between a object and the robot
+void set_min_ultra_distance(const int& value) { min_ultra_distance = value; }
+
+int get_default_min_ultra_distance() { return default_min_ultra_distance; }
 
 // ultra_sonic distance sensor variables are saved here
 sensor_ultrasonic_t ultra_sonic;
@@ -71,7 +80,6 @@ int get_ultra_distance() {
   return ultra_sonic.cm;
 }
 
-
 /**
   * checks if the distance is more than the minimum distance
   * @return bool enough distance between object and sensor
@@ -87,4 +95,5 @@ void init_ultra_sensor() {
   int sensor_type = BP_ultra.set_sensor_type(ULTRASONIC, SENSOR_TYPE_NXT_ULTRASONIC);
   set_motor_ultra_start_pos();
   reset_motor_ultra_offset();
+  BP_ultra.set_motor_limits(MOTOR, 50, 100);
 }
