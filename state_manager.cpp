@@ -90,7 +90,7 @@ float update_vect(int & current_angle){
 			 sum += angles[i];
 		 }
 	float avg_angle = sum/angles.size();
-		  if (index ==3){
+		  if (index ==2){
 			  index =0;
 		  }
 		  else{
