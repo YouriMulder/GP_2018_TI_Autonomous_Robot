@@ -62,7 +62,9 @@ void turn_to_object(const char& movement, const int& degrees, const bool& ultra_
 
 void trace_object(const char& movement, const int& speed) {
   straight(speed, movement);
-  while(!is_ultra_distance_enough()) {}
+  while(!is_ultra_distance_enough()) {
+    cout << "tracing" << endl;
+  }
   stop();
 }
 
@@ -73,10 +75,11 @@ void move_past_object(const char& movement, const int& speed) {
 }
 
 void move_to_object(const char& movement, const int& speed) {
-  straight(movement, speed);
-  while(is_ultra_distance_enough()) {}
+  straight(speed, movement);
+  while(is_ultra_distance_enough()) {
+    cout << "Move to" << endl;
+  }
   stop();
-
 }
 
 void inverse_degrees(int& degrees) {
@@ -116,8 +119,8 @@ void dodge_object_state(const char& movement) {
 
     this_thread::sleep_for(chrono::seconds(2));
 
-    turn_to_object(movement, degrees, false);
-    //set_min_ultra_distance(get_default_min_ultra_distance());
+    turn_to_object(movement, degrees, true);
+
     this_thread::sleep_for(chrono::seconds(5));
     straight(movement, current_speed);
 
@@ -145,8 +148,8 @@ void follow_line_state() {
   current_speed = default_speed;
 
   if(!is_ultra_distance_enough()) {
-		//stop();
-    //dodge_object_state('f');
+		stop();
+    dodge_object_state('f');
   }
   cout << "light: " << light_get_reflection() << "  color:  " << color_get_reflection()<<endl;
 
@@ -175,10 +178,10 @@ void follow_line_state() {
   if(current_angle > -90 && current_angle < 90) {
 	turn(current_speed, current_direction, avg_angle);
     set_motor_ultra_position(avg_angle);
-  } 
+  }
   else {
-    turn_on_place(current_direction, current_angle);	
-	straight(current_direction,current_speed);
+    turn_on_place(current_direction, current_angle);
+	  straight(current_direction,current_speed);
   }
   usleep(100);
 }
