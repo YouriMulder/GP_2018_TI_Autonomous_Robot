@@ -16,8 +16,10 @@ int index = 0;
 float avg_angle;
 
 int current_speed = 50;
+int default_speed = 50;
 int current_angle = 0;
 char current_direction = 'f';
+
 // getters and setters
 // -------------------
 int get_current_speed() {
@@ -50,10 +52,44 @@ bool random_bool() {
   return rand() % 2;
 }
 
+void turn_to_object(const char& movement, const int& degrees, const bool& ultra_sonic_turn) {
+  turn_on_place(movement, degrees);
+  if(ultra_sonic_turn) {
+    turn_motor_ultra(degrees * -1);
+  }
+  std::this_thread::sleep_for (std::chrono::seconds(5));
+}
+
+void trace_object(const char& movement, const int& speed) {
+  straight(speed, movement);
+  while(!is_ultra_distance_enough()) {}
+  stop();
+}
+
+void move_past_object(const char& movement, const int& speed) {
+  straight(speed, movement);
+  this_thread::sleep_for(chrono::seconds(1));
+  stop();
+}
+
+void move_to_object(const char& movement, const int& speed) {
+  straight(movement, speed);
+  while(is_ultra_distance_enough()) {}
+  stop();
+
+}
+
+void inverse_degrees(int& degrees) {
+  degrees *= -1;
+}
+
 // side 0 == left | side 1 == right
 void dodge_object_state(const char& movement) {
+  current_speed = default_speed;
   int degrees = 90;
   bool side = random_bool();
+  // temp
+  side = 1;
 
   set_min_ultra_distance(get_min_ultra_distance() + 10);
 
@@ -63,23 +99,29 @@ void dodge_object_state(const char& movement) {
       degrees *= -1;
     }
 
-    turn_on_place(movement, degrees);
-    turn_motor_ultra(degrees * -1);
-    std::this_thread::sleep_for (std::chrono::seconds(5));
+    turn_to_object(movement, degrees, true);
+    trace_object(movement, current_speed);
+    move_past_object(movement, current_speed);
 
-    while(!is_ultra_distance_enough()) {
-      straight(current_speed, movement);
-    }
+    inverse_degrees(degrees);
 
-    this_thread::sleep_for(chrono::seconds(1));
+    this_thread::sleep_for(chrono::seconds(2));
 
-    //while(!is_ultra_distance_enough) {}
+    turn_to_object(movement, degrees, false);
 
-    //turn_on_place(movement, degrees * -1);
-    stop();
-    turn_motor_ultra(degrees);
-    set_min_ultra_distance(get_default_min_ultra_distance());
+    move_to_object(movement, current_speed);
+
+    trace_object(movement, current_speed);
+    move_past_object(movement, current_speed);
+
+    this_thread::sleep_for(chrono::seconds(2));
+
+    turn_to_object(movement, degrees, false);
+    //set_min_ultra_distance(get_default_min_ultra_distance());
     this_thread::sleep_for(chrono::seconds(5));
+    straight(movement, current_speed);
+
+    set_min_ultra_distance(get_min_ultra_distance() - 10);
   }
 }
 
@@ -99,11 +141,9 @@ float update_vect(int & current_angle){
 	return avg_angle;
 }
 
-void move_ultra_sensor_slow(const int& value) {
-
-}
-
 void follow_line_state() {
+  current_speed = default_speed;
+
   if(!is_ultra_distance_enough()) {
 		stop();
     dodge_object_state('f');
@@ -130,6 +170,7 @@ void follow_line_state() {
 	else if(avg_angle < -15 && avg_angle > -75){
 		current_speed = current_speed - (-1*0.3*current_angle);
 	}
+  cout << current_speed << endl;
 
   if(current_angle > -90 && current_angle < 90) {
 		turn(current_speed, current_direction, avg_angle);
