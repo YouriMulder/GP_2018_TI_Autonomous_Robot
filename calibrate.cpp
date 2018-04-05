@@ -37,11 +37,10 @@ void calibrate_line_sensors(){
     float min_light = 0;
     float max_color = 0;
     float min_color = 0;
-    char temp;
-    cout << "put sensors on white with the black line in the middle\n";
-    cin >> temp;
-    //color on black light on white
-    turn_on_place('f', 45);
+    char choice;
+    cout << "put sensors on black. with motor y/n?\n";
+    cin >> choice;
+    //sensors on black
     for (int i = 0; i < 10; ++i) {
         BP_calibrate.get_sensor(PORT_2, calibrate_color_data);
         float reflected = calibrate_color_data.reflected_green;
@@ -53,13 +52,20 @@ void calibrate_line_sensors(){
         }
 
         BP_calibrate.get_sensor(PORT_1, calibrate_light_data);
-        if(calibrate_light_data.reflected < min_light || min_light == 0){
-            min_light = calibrate_light_data.reflected;
+        if(calibrate_light_data.reflected > max_light || max_light == 0){
+            max_light = calibrate_light_data.reflected;
         }
         usleep(100000);
     }
-    //light on black color on white
-    turn_on_place('f', -90);
+    //sensors on white
+    if(choice == 'y'){
+        straight(25, 'f');
+        usleep(300000);
+        stop();
+    } else {
+        cout << "put sensors on white";
+        cin >> choice;
+    }
 
     for (int j = 0; j < 10; ++j) {
 
@@ -72,14 +78,13 @@ void calibrate_line_sensors(){
             min_color = reflected;
         }
 
-
         BP_calibrate.get_sensor(PORT_1, calibrate_light_data);
-        if(calibrate_light_data.reflected > max_light || max_light == 0){
-            max_light = calibrate_light_data.reflected;
+        if(calibrate_light_data.reflected < min_light || min_light == 0){
+            min_light = calibrate_light_data.reflected;
         }
+
         usleep(100000);
     }
-    turn_on_place('f', 45);
     if(save_calibration((int) max_color, (int) min_color, (int) max_light, (int) min_light)){
         cout << "calibration successful\n";
     } else {

@@ -15,26 +15,30 @@ calibrate_color color = {447, 661};
 
 //read calibration from calibration_save file and save data to calibration struct
 void color_read_and_set_calibration_save(){
-    ifstream readFile ("calibration_save");
-    int max_color = 0;
-    int min_color = 0;
-    string line;
-    if (readFile.is_open()){
-        while (getline(readFile, line)) {
-            if(find_sub_string(line, "max_color:")){
-                line = remove_sub_str(line, "max_color:");
-                max_color = atoi(remove_sub_str(line, "\n:").c_str());
+    try {
+        ifstream readFile("calibration_save");
+        int max_color = 0;
+        int min_color = 0;
+        string line;
+        if (readFile.is_open()) {
+            while (getline(readFile, line)) {
+                if (find_sub_string(line, "max_color:")) {
+                    line = remove_sub_str(line, "max_color:");
+                    max_color = atoi(remove_sub_str(line, "\n:").c_str());
+                }
+                if (find_sub_string(line, "min_color:")) {
+                    line = remove_sub_str(line, "min_color:");
+                    min_color = atoi(remove_sub_str(line, "\n:").c_str());
+                }
             }
-            if(find_sub_string(line, "min_color:")){
-                line = remove_sub_str(line, "min_color:");
-                min_color = atoi(remove_sub_str(line, "\n:").c_str());
-            }
+            readFile.close();
+            cout << max_color << "\n" << min_color << "\n";
+            color = {min_color, max_color};
+        } else {
+            cout << "can't read calibration_save\n";
         }
-        readFile.close();
-        cout << max_color << "\n" << min_color << "\n";
-        color = {min_color, max_color};
-    }else{
-        cout << "can't read calibration_save\n";
+    } catch (int e) {
+        cout << "something went wrong, does calibration_save file exist";
     }
 }
 
