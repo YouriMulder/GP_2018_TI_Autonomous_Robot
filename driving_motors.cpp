@@ -94,11 +94,11 @@ void turn_on_place(char f_r,float corner){
 	 BP_wheels.set_motor_limits(L,35,1200);
 	 BP_wheels.set_motor_limits(R,35,1200);
 	if (f_r == 'f'){
-		BP_wheels.set_motor_position_relative(L,corner*2.5);
-		//BP_wheels.set_motor_position_relative(R,corner*2.5*-1);
+		BP_wheels.set_motor_position_relative(L,corner*2.35);
+		BP_wheels.set_motor_position_relative(R,corner*2.35*-1);
 	}
 	if (f_r == 'r'){
-		BP_wheels.set_motor_position_relative(R,corner*2.5);
-		//BP_wheels.set_motor_position_relative(L,corner*2.5*-1);
+		BP_wheels.set_motor_position_relative(R,corner*2.35);
+		BP_wheels.set_motor_position_relative(L,corner*2.35*-1);
 	}
 }
