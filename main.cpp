@@ -50,15 +50,27 @@ int main() {
   signal(SIGINT, exit_signal_handler);
   init_all();
   reset_motors();
-	int start =0;
-	cout << "start driving" <<endl;
-	cin >> start;
 
-	if(start ==1) {
-    calibrate_ultra_sonic_motor(90);
-    while(robot_active) {
-      robot_active = follow_line_state();
-    }
+  int start;
+  cout << "start driving" <<endl;
+  cin >> start;
+  int x = 0;
+  int y = 0;
+  int max_w = 0;
+  int max_h = 0;
+  cout << "\nx: ";
+  cin >> x;
+  cout << "\ny: ";
+  cin >> y;
+  cout << "\nmax w: ";
+  cin >> max_w;
+  cout << "\nmax h: ";
+  cin >> max_h;
+  if(start) {
+      calibrate_ultra_sonic_motor(90);
+//        cout << "\n test: " << x << " " << y << " " << max_w << " " << max_h;
+        cout << "testttt\n";
+        grid(x, y, max_w, max_h);
   }
 }
 

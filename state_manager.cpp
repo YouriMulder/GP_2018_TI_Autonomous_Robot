@@ -211,3 +211,223 @@ bool follow_line_state() {
   usleep(5000);
   return true;
 }
+
+char grid_decision(const vector<vector<int>> & grid, int current_x, int current_y, int max_w, int max_h, int x, int y){
+    if(current_x == max_w){
+        if(max_h == current_y){
+            if(current_x > x){
+                if(x-1 >= 0 && grid[y][x-1] != 2){
+                    return 'l';
+                }
+            }
+            return 'u';
+        }
+        if(current_y == 0){
+            if(current_x > x){
+                if(x-1 >= 0 && grid[y][x-1] != 2){
+                    return 'l';
+                }
+            }
+            return 'd';
+        }
+
+        if(current_x < x) {
+            if (x+1 <= max_w && grid[y][x + 1] != 2){
+                return 'r';
+            }
+        }
+        if(current_y < y){
+            if(y+1 <= max_h && grid[y+1][x] != 2){
+                return 'd';
+            }
+        }
+        if(current_x > x){
+            if(x-1 >= 0 && grid[y][x-1] != 2){
+                return 'l';
+            }
+        }
+        if(current_y >= y){
+            if(y-1 > 0 && grid[y-1][x] != 2){
+                return 'u';
+            }
+        }
+    }
+
+    if(current_x == 0){
+        if(current_y == 0){
+            if(current_x < x){
+                if(x+1 <= max_w && grid[y][x+1] != 2){
+                    return 'r';
+                }
+            }else{
+                if(y+1 <= max_h && grid[y+1][x] != 2){
+                    return 'd';
+                } else {
+                    return 'r';
+                }
+            }
+        }
+        if(current_y == max_h){
+            if(current_x < x){
+                if(grid[y][x+1] != 2){
+                    return 'r';
+                } else {
+                    return 'u';
+                }
+            }
+            if(grid[y-1][x] != 2){
+                return 'u';
+            } else {
+                return 'r';
+            }
+
+        }
+        if(current_x < x) {
+            if (x+1 <= max_w && grid[y][x + 1] != 2){
+                return 'r';
+            }
+        }
+        if(current_y < y){
+            if(y+1 <= max_h && grid[y+1][x] != 2){
+                return 'd';
+            }
+        }
+        if(current_x > x){
+            if(x-1 > 0 && grid[y][x-1] != 2){
+                return 'l';
+            }
+        }
+        if(current_y > y){
+            if(y-1 > 0 && grid[y-1][x] != 2){
+                return 'u';
+            }
+        }
+    }
+    if(current_x < x) {
+        if (x+1 <= max_w && grid[y][x + 1] != 2){
+            return 'r';
+        }
+    }
+    if(current_y < y){
+        if(y+1 <= max_h && grid[y+1][x] != 2){
+            return 'd';
+        }
+    }
+    if(current_x > x){
+        if(x-1 > 0 && grid[y][x-1] != 2){
+            return 'l';
+        }
+    }
+    if(current_y > y){
+        if(y-1 > 0 && grid[y-1][x] != 2){
+            return 'u';
+        }
+    }
+    cout << "ik ben er... denk ik?!?!?!???";
+    return 's';
+}
+
+void grid(const int & x, const int & y, const int & max_w, const int & max_h){
+    cout << "test grid";
+    int furthest_x = 0;
+    char direction = 'r';
+    int current_x = 0;
+    int current_y = 0;
+
+    vector<vector<int>> grid;
+
+    for (int i = 0; i < max_h; ++i) {
+        vector<int> m;
+        grid.push_back(m);
+        for (int j = 0; j < max_w; ++j) {
+            grid[i].push_back(0);
+        }
+    }
+
+    while(true){
+        current_speed = default_speed;
+
+        if(!is_ultra_distance_enough()) {
+            stop();
+            grid[current_y][current_x] = 2;
+            if(direction == 'r'){
+                current_x--;
+                direction = 'l';
+            } else if(direction == 'l'){
+                current_x++;
+                direction = 'r';
+            } else if(direction == 'u'){
+                current_y++;
+                direction = 'd';
+            } else if(direction == 'd'){
+                current_y--;
+                direction = 'u';
+            }
+            turn_on_place('f', 180);
+        }
+//        cout << "light: " << light_get_reflection() << "  color:  " << color_get_reflection()<<endl;
+
+        if (light_get_reflection()>color_get_reflection()){
+            current_angle = light_get_reflection();
+        }
+        else {
+            current_angle = -1 * color_get_reflection();
+        }
+
+        avg_angle = update_vect(current_angle);
+
+        if(avg_angle > 5 && avg_angle < 15) {
+            current_angle = 5 ;
+        }
+        else if(avg_angle < -5 && avg_angle > -15) {
+            current_angle = -5 ;
+        }
+        else if(avg_angle >= 15 &&  avg_angle <= 75){
+            current_speed = current_speed - 0.3*current_angle;
+        }
+        else if(avg_angle < -15 && avg_angle >= -75){
+            current_speed = current_speed - (-1*0.3*current_angle);
+        }
+
+        if(current_angle > -90 && current_angle < 90) {
+            //kruispunt
+            grid[current_y][current_x] = 1;
+            char new_direction = grid_decision(grid, current_x, current_y, max_w, max_h, x, y);
+            int offset = 0;
+
+            if(direction == 'r'){
+                offset = 0;
+            } else if(direction == 'l'){
+                offset = 180;
+            } else if(direction == 'u'){
+                offset = -90;
+            } else if(direction == 'd'){
+                offset = 90;
+            }
+
+            if(new_direction == 'r'){
+                turn_on_place('f', offset+0);
+            } else if(new_direction == 'd'){
+                turn_on_place('f', offset+90);
+            } else if(new_direction == 'l'){
+                turn_on_place('f', offset+180);
+            } else if(new_direction == 'u'){
+                turn_on_place('f', offset-90);
+            } else if (new_direction == 's'){
+                turn_on_place('f', offset+360);
+                stop();
+            }
+            direction = new_direction;
+            turn_on_place(current_direction, current_angle);
+            straight(current_direction,current_speed);
+//            turn(current_speed, current_direction, avg_angle);
+//            set_motor_ultra_position(avg_angle);
+        }
+        else {
+            turn_on_place(current_direction, current_angle);
+            straight(current_direction,current_speed);
+        }
+        usleep(5000);
+
+    }
+}
