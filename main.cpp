@@ -57,7 +57,7 @@ int main() {
 	if(start ==1) {
     calibrate_ultra_sonic_motor(90);
     while(robot_active) {
-      follow_line_state();
+      robot_active = follow_line_state();
     }
   }
 }

@@ -78,6 +78,10 @@ bool color_detect_line(){
     return false;
 }
 
+bool is_color_red() {
+  return read_color_sensor() == 5;
+}
+
 // reset min and max value for calibrate color
 void color_calibrate(){
     float max = 0;
