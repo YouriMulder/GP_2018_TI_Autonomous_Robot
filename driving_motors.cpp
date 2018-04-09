@@ -59,8 +59,7 @@ void turn(float speed, char f_r, float corner){
 	float right_motor;
 	BP_wheels.set_motor_limits(L,80,1200);
 	BP_wheels.set_motor_limits(R,80,1200);
-	speed = speed/5;
-	speed = speed * 32.767;
+	speed = speed * 32.767/5;
 	corner = corner /18;
 	if (f_r == 'r'){
 				speed = speed*-1;
