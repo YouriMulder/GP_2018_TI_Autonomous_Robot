@@ -13,7 +13,7 @@ sensor_color_t data;
 
 calibrate_color color = {447, 661};
 
-//read calibration from calibration_save file and save data to calibration struct
+// reads calibration from calibration_save file and save data to calibration struct
 void color_read_and_set_calibration_save(){
     try {
         ifstream readFile("calibration_save");
@@ -41,12 +41,12 @@ void color_read_and_set_calibration_save(){
         cout << "something went wrong, does calibration_save file exist";
     }
 }
-//setup a color sensor. defauld PORT_2 is PORT_2_2
+// setup color sensor. default is PORT_2
 int set_color_sensor(){
     return BP_color.set_sensor_type(PORT_2, SENSOR_TYPE_NXT_COLOR_FULL);
 }
 
-//retrun value between 0 to 100. 0 is black, 100 is white.
+// returns value between 0 to 100. 0 is black, 100 is white.
 int color_get_reflection(){
     BP_color.get_sensor(PORT_2, data);
     float reflection = data.reflected_green;
@@ -63,13 +63,21 @@ int color_get_reflection(){
     return (int) reflection;
 }
 
-//get the color sensor data
+/*
+  gets the color sensor data
+  black = 1
+  red = 5
+  white = 6
+*/
 int read_color_sensor(){
     BP_color.get_sensor(PORT_2, data);
     return data.color;
 }
 
-//check if the sensor sees black
+/**
+  checks if the sensor sees black
+  @return bool black line detected
+ */
 bool color_detect_line(){
     int result = read_color_sensor();
     if(result == 1){
@@ -78,11 +86,15 @@ bool color_detect_line(){
     return false;
 }
 
+/**
+  checks if the sensor detects red
+  @return bool red line detected
+ */
 bool is_color_red() {
   return read_color_sensor() == 5;
 }
 
-// reset min and max value for calibrate color
+// resets min and max value for calibrate color
 void color_calibrate(){
     float max = 0;
     float min = 0;

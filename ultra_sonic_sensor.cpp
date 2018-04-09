@@ -14,12 +14,9 @@ int min_ultra_distance = 10;
 
 BrickPi3 BP_ultra;
 
-// get the minimum distance there may be between a object and the robot
+// getters and setters
 int get_min_ultra_distance() { return min_ultra_distance; }
-
-// set the minimum distance there may be between a object and the robot
 void set_min_ultra_distance(const int& value) { min_ultra_distance = value; }
-
 int get_default_min_ultra_distance() { return default_min_ultra_distance; }
 
 // ultra_sonic distance sensor variables are saved here

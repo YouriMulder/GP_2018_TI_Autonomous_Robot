@@ -12,10 +12,12 @@
 #include "headers/general_functions.hpp"
 using namespace std;
 
+// variables for calculating angles
 vector<float> angles ={0,0,0};
 int index = 0;
 float avg_angle;
 
+// robot variables
 int current_speed = 50;
 int default_speed = 50;
 int current_angle = 0;
@@ -48,11 +50,21 @@ void set_current_direction(const char& direction) {
 }
 // ------------------
 
+/**
+  gives a random boolean
+  @return bool random value between 0-1
+ */
 bool random_bool() {
   srand(time(NULL));
   return rand() % 2;
 }
 
+/**
+  turns the robot perpendicular to the object
+  @param char direction the robot is moving 'f' forward, 'r' reverse
+  @param int degrees the robots has to turn
+  @param bool whether the ultra sonic sensor has to turn
+ */
 void turn_to_object(const char& movement, const int& degrees, const bool& ultra_sonic_turn) {
   turn_on_place(movement, degrees);
   if(ultra_sonic_turn) {
@@ -61,6 +73,11 @@ void turn_to_object(const char& movement, const int& degrees, const bool& ultra_
   this_thread::sleep_for(chrono::seconds(1));
 }
 
+/**
+  drives alongside the object
+  @param char direction the robot is moving 'f' forward, 'r' reverse
+  @param int speed the robot is driving at
+ */
 void trace_object(const char& movement, const int& speed) {
   vector<int> distances = {};
   for(int i = 0; i < 20; i++, distances.push_back(get_ultra_distance()));
@@ -81,22 +98,41 @@ void trace_object(const char& movement, const int& speed) {
   }
 }
 
+/**
+  drives the robot past the object
+  @param char direction the robot is moving 'f' forward, 'r' reverse
+  @param int speed the robot is driving at
+ */
 void move_past_object(const char& movement, const int& speed) {
   straight(speed, movement);
   this_thread::sleep_for(chrono::milliseconds(1500));
   stop();
 }
 
+/**
+  drives a centrain direction until there is a object detected
+  @param char direction the robot is moving 'f' forward, 'r' reverse
+  @param int speed the robot is driving at
+ */
 void move_to_object(const char& movement, const int& speed) {
   straight(speed, movement);
   while(is_ultra_distance_enough()) {}
   stop();
 }
 
+/**
+  inverse an integer negative becomes positive and vise vesa
+  @param int the value you want to inverse
+ */
 void inverse_degrees(int& degrees) {
   degrees *= -1;
 }
 
+/**
+  transfers the state from dodge_object to follow_line
+  @param char direction the robot is moving 'f' forward, 'r' reverse
+  @param int degrees the robot has to turn to set everything straight
+ */
 void dodge_object_to_follow_line_state(const char& movement, int& degrees) {
   stop();
   inverse_degrees(degrees);
@@ -106,12 +142,15 @@ void dodge_object_to_follow_line_state(const char& movement, int& degrees) {
   set_min_ultra_distance(get_default_min_ultra_distance());
 }
 
-// side 0 == left | side 1 == right
+/**
+  drives around the detected object
+  @param char direction the robot is moving 'f' forward, 'r' reverse
+ */
 void dodge_object_state(const char& movement) {
   current_speed = default_speed;
   int degrees = 90;
-  bool side = random_bool();
-  side = 1;
+  //bool side = random_bool();
+  bool side = 1;
 
   set_min_ultra_distance(get_min_ultra_distance() + 10);
 
@@ -149,7 +188,12 @@ void dodge_object_state(const char& movement) {
   }
 }
 
-float update_vect(int & current_angle){
+/**
+  adds the current_angle to the vector with the angles
+  @param int the current_angle the robot should move to
+  @return float average value of the vector angles
+ */
+float update_vect(const int& current_angle){
 	float sum =0;
 	angles[index]=current_angle;
 		 for (unsigned int i=0;i<angles.size();i++){
@@ -164,6 +208,10 @@ float update_vect(int & current_angle){
 	return avg_angle;
 }
 
+/**
+  follows the line and detects objects on the line
+  @return bool whether the robot should be active or not
+ */
 bool follow_line_state() {
   current_speed = default_speed;
 
