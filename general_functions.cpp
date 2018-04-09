@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <fstream>
 #include <string>
+#include <vector>
 using namespace std;
 
 BrickPi3 BP_gfunctions;
@@ -21,4 +22,10 @@ string remove_sub_str(string str, string sub){
         str.erase(str.find(sub), sub.length());
     }
     return str;
+}
+
+int average_vector(const vector<int>& v) {
+  int total = 0;
+  for(const int& x : v) { total += x; }
+  return total/v.size();
 }
