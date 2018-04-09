@@ -164,8 +164,13 @@ float update_vect(int & current_angle){
 	return avg_angle;
 }
 
-void follow_line_state() {
+bool follow_line_state() {
   current_speed = default_speed;
+
+  if(is_color_red()) {
+    stop();
+    return false;
+  }
 
   if(!is_ultra_distance_enough()) {
 		stop();
@@ -204,4 +209,5 @@ void follow_line_state() {
     turn_on_place(current_direction, current_angle);
   }
   usleep(5000);
+  return true;
 }

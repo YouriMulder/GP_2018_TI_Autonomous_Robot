@@ -21,11 +21,17 @@ int set_color_sensor();
 //retrun value between 0 to 100. 0 is black, 100 is white.
 int color_get_reflection();
 
-//get the color sensor data
+/*  get the color sensor data
+    black = 1
+    red = 5
+    white = 6
+*/
 int read_color_sensor();
 
 //check if the sensor sees black
 bool color_detect_line();
+
+bool is_color_red();
 
 // reset min and max value for calibrate color
 void color_calibrate();
