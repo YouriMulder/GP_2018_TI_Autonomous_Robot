@@ -8,19 +8,16 @@ uint8_t R = PORT_B;
 
 BrickPi3 BP_wheels;
 
-/**
-	* purpose: initializing the robots itself so the brickpi is comunicating with the code
-	*/
+// initializes the motors
 void init_motors(){
 	BP_wheels.detect();
 }
 
-	/**
-	 * sending the robot straight forward or backwards
-	 *
-	 * @param speed an float value that controls the speed of the motors higher means faster
-	 * @param f_r is a char that defines the direction of the motors 'f' means forward, 'r' means revers
-	 * */
+/**
+ * starts driving the robot straight forward or backward
+ * @param speed a float that controls the speed of the motors 0-100
+ * @param f_r is a char that defines the direction of the motors 'f' means forward, 'r' means reverse
+ */
 void straight (float speed, char f_r) {
 	speed = speed * 32.767 / 5 ;
 	if (f_r == 'f') {
@@ -33,27 +30,24 @@ void straight (float speed, char f_r) {
 	}
 }
 
-	/**
-	 * stopping both motors
-	 */
+// stops both motors
 void stop () {
 	BP_wheels.set_motor_power(L,0);
 	BP_wheels.set_motor_power(R,0);
 }
-	/**
-	 * setting both motors in the free rotating position
-	 */
+
+// sets both motors in the free rotating position
 void free () {
 	BP_wheels.set_motor_power(L,-128);
 	BP_wheels.set_motor_power(R,-128);
 }
 
 /**
-  *turning the robot in different ways
-  * @param speed defines the speed the robot moves with
-  * @param f_r defines the direction of the robot 'f' means forward 'r' means backwards(reverse)
-  * @param corner defines how much the robot needs to corner a higher value means a more tight corner and a lower value means a shallow corner
-	*/
+ * drives robot forward or backward using a given angle
+ * @param speed controls the speed of the motors 0-100
+ * @param f_r the direction of the motors 'f' means forward, 'r' means reverse
+ * @param corner the angle the robot is turning
+ */
 void turn(float speed, char f_r, float corner){
 	float left_motor;
 	float right_motor;
@@ -81,14 +75,16 @@ void turn(float speed, char f_r, float corner){
 	BP_wheels.set_motor_dps(R,right_motor+3);
 }
 
+// calls free()
 void reset_motors(){
 	free();
 }
 
 /**
-  * @param f_r defines the direction of the robot 'f' means forward 'r' means backwards(reverse)
-	* @param corner defines the angle how far the robot will turn higher means more
-	*/
+ * turns robot on it's place
+ * @param f_r a char that defines the direction of the motors 'f' means forward, 'r' means reverse
+ * @param corner defines the angle how far the robot will turn higher means more
+ */
 void turn_on_place(char f_r,float corner){
 	 BP_wheels.set_motor_limits(L,35,1200);
 	 BP_wheels.set_motor_limits(R,35,1200);

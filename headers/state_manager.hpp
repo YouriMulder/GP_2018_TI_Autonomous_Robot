@@ -9,8 +9,13 @@ void set_current_angle(const int& angle);
 char get_current_direction();
 void set_current_direction(const char& direction);
 
+// transfers the state from dodge_object to follow_line
 void dodge_object_state();
-float update_vect(int & current_angle);
+
+// adds the current_angle to the vector with the angles
+float update_vect(const int& current_angle);
+
+// follows the line and detects objects on the line
 bool follow_line_state();
 
 #endif /* _STATE_MANAGER_HPP */

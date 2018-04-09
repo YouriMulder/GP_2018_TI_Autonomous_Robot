@@ -13,7 +13,7 @@ sensor_light_t light_data;
 
 calibrate_light light = {1877, 2609};
 
-//read calibration from calibration_save file and save data to calibration struct
+// updates the calibration values struct from the calibration_save file
 void light_read_and_set_calibration_save(){
     try {
         ifstream readFile ("calibration_save");
@@ -42,18 +42,27 @@ void light_read_and_set_calibration_save(){
     }
 }
 
-//setup a light sensor. default PORT_1 is PORT_1
+/**
+  setup a light sensor. default PORT_1 is PORT_1
+  @return int error code from set_sensor_type in BrickPi3 library
+ */
 int set_light_sensor(){
     return BP_light.set_sensor_type(PORT_1, SENSOR_TYPE_NXT_LIGHT_ON);
 }
 
-//get light sensor light_data.
+/**
+  gets light sensor light_data reflection value
+  @returns int light_sensor reflection value
+ */
 int read_light_sensor(){
     BP_light.get_sensor(PORT_1, light_data);
     return light_data.reflected;
 }
 
-//check if the sensor sees black
+/**
+  check if the sensor sees black
+  @return bool
+ */
 bool light_detect_line(){
     int result = read_light_sensor();
     cout << read_light_sensor() << " " << light.min << endl;
@@ -78,7 +87,7 @@ int light_get_reflection(){
     return 100-reflection;
 }
 
-// reset min and max value of calibrate light
+// resets min and max value of calibrate light
 void light_calibrate(){
     float max = 0;
     float min = 0;

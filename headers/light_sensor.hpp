@@ -5,7 +5,7 @@ using namespace std;
 
 #include <string>
 
-//read calibration from calibration_save file and save data to calibration struct
+// updates the calibration values struct from the calibration_save file
 void light_read_and_set_calibration_save();
 
 //struct to save the calibrateion
@@ -14,19 +14,19 @@ struct calibrate_light{
     int min;
 };
 
-//setup a light sensor. defauld port is PORT_1
+// setup light sensor. default port is PORT_1
 int set_light_sensor();
 
-//get light sensor data.
+// gets light sensor data.
 int read_light_sensor();
 
-//check if the sensor sees black
+// checks if the sensor sees black
 bool light_detect_line();
 
-//return value between 0 and 100. 100 is white, 0 is black
+// returns value between 0 and 100. 100 is white, 0 is black
 int light_get_reflection();
 
-// reset min and max value of calibrate light
+// resets min and max value of calibrate light
 void light_calibrate();
 
 #endif //_LIGHT_SENSOR_HPP

@@ -60,6 +60,7 @@ int main() {
       robot_active = follow_line_state();
     }
   }
+  exit_signal_handler();
 }
 
 void exit_signal_handler(int signo) {
