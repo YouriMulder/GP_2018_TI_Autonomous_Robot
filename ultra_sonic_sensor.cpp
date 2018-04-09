@@ -10,7 +10,7 @@ using namespace std;
 
 // minimum distance
 int min_ultra_distance = 10;
-#define default_min_ultra_distance 20
+#define default_min_ultra_distance 10
 
 BrickPi3 BP_ultra;
 
