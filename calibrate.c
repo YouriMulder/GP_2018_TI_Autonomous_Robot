@@ -14,6 +14,10 @@ sensor_color_t calibrate_color_data;
 
 sensor_light_t calibrate_light_data;
 
+/**
+  saves the new calibration to file
+  @return bool whether the data is written to the file or not
+ */
 bool save_calibration(int max_color, int min_color, int max_light, int min_light){
     ofstream writeFile;
     writeFile.open("calibration_save", ofstream::out);
@@ -30,6 +34,7 @@ bool save_calibration(int max_color, int min_color, int max_light, int min_light
     return true;
 }
 
+// calibrates the sensors and saves it using save_calibration
 void calibrate_line_sensors(){
     BP_calibrate.set_sensor_type(PORT_1, SENSOR_TYPE_NXT_LIGHT_ON);
     BP_calibrate.set_sensor_type(PORT_2, SENSOR_TYPE_NXT_COLOR_FULL);

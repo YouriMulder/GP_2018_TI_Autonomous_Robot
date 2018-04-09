@@ -57,9 +57,10 @@ int main() {
 	if(start ==1) {
     calibrate_ultra_sonic_motor(90);
     while(robot_active) {
-      follow_line_state();
+      robot_active = follow_line_state();
     }
   }
+  exit_signal_handler(SIGINT);
 }
 
 void exit_signal_handler(int signo) {

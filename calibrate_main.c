@@ -25,7 +25,6 @@ void init_all() {
 int main() {
     cout << "Starting bot" << endl;
 
-
     signal(SIGINT, exit_signal_handler);
     init_all();
     reset_motors();
