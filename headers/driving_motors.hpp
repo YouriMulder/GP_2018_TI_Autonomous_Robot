@@ -20,6 +20,6 @@ void free ();
 void reset_motors();
 
 // turns robot on it's place
-void turn_on_place (char f_r,float corner);
+void turn_on_place(char f_r,float corner);
 
 #endif /* _DRIVING_MOTORS_HPP*/
