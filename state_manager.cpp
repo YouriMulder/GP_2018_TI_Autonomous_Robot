@@ -212,42 +212,48 @@ bool follow_line_state() {
   return true;
 }
 
-char grid_decision(const vector<vector<int>> & grid, int current_x, int current_y, int max_w, int max_h, int x, int y){
+char grid_decision(const vector<vector<int>> & grid, const int & current_x, const int & current_y, const int & max_w, const int & max_h, const int & x, const int & y){
+//    cout << "\ncurrent_x: " << current_x;
+//    cout << "\ncurrent_y: " << current_y;
+//    cout << "\nmax_w: " << max_w;
+//    cout << "\nmax_h: " << max_h;
+//    cout << "\nx: " << x << endl;
+//    cout << "\ny: " << y;
     if(current_x == max_w){
         if(max_h == current_y){
-            if(current_x > x){
-                if(x-1 >= 0 && grid[y][x-1] != 2){
+            if(current_x > x && x-1 >= 0){
+                if(grid[y][x-1] != 2){
                     return 'l';
                 }
             }
             return 'u';
         }
         if(current_y == 0){
-            if(current_x > x){
-                if(x-1 >= 0 && grid[y][x-1] != 2){
+            if(current_x > x && x-1 >= 0 ){
+                if(grid[y][x-1] != 2){
                     return 'l';
                 }
             }
             return 'd';
         }
 
-        if(current_x < x) {
-            if (x+1 <= max_w && grid[y][x + 1] != 2){
+        if(current_x < x && x+1 <= max_w ) {
+            if (grid[y][x + 1] != 2){
                 return 'r';
             }
         }
-        if(current_y < y){
-            if(y+1 <= max_h && grid[y+1][x] != 2){
+        if(current_y < y && y+1 <= max_h){
+            if(grid[y+1][x] != 2){
                 return 'd';
             }
         }
-        if(current_x > x){
-            if(x-1 >= 0 && grid[y][x-1] != 2){
+        if(current_x > x && x-1 >= 0 ){
+            if(grid[y][x-1] != 2){
                 return 'l';
             }
         }
-        if(current_y >= y){
-            if(y-1 > 0 && grid[y-1][x] != 2){
+        if(current_y >= y && y-1 >= 0){
+            if(grid[y-1][x] != 2){
                 return 'u';
             }
         }
@@ -255,8 +261,8 @@ char grid_decision(const vector<vector<int>> & grid, int current_x, int current_
 
     if(current_x == 0){
         if(current_y == 0){
-            if(current_x < x){
-                if(x+1 <= max_w && grid[y][x+1] != 2){
+            if(current_x < x && x+1 <= max_w ){
+                if(grid[y][x+1] != 2){
                     return 'r';
                 }
             }else{
@@ -269,42 +275,42 @@ char grid_decision(const vector<vector<int>> & grid, int current_x, int current_
         }
         if(current_y == max_h){
             if(current_x < x){
-                if(grid[y][x+1] != 2){
+                if(x+1 <= max_w && grid[y][x+1] != 2){
                     return 'r';
                 } else {
                     return 'u';
                 }
             }
-            if(grid[y-1][x] != 2){
+            if(y-1 > 0 && grid[y-1][x] != 2){
                 return 'u';
             } else {
                 return 'r';
             }
 
         }
-        if(current_x < x) {
-            if (x+1 <= max_w && grid[y][x + 1] != 2){
+        if(current_x < x && x+1 <= max_w) {
+            if (grid[y][x + 1] != 2){
                 return 'r';
             }
         }
-        if(current_y < y){
-            if(y+1 <= max_h && grid[y+1][x] != 2){
+        if(current_y < y && y+1 <= max_h ){
+            if(grid[y+1][x] != 2){
                 return 'd';
             }
         }
-        if(current_x > x){
-            if(x-1 > 0 && grid[y][x-1] != 2){
+        if(current_x > x && x-1 > 0){
+            if(grid[y][x-1] != 2){
                 return 'l';
             }
         }
-        if(current_y > y){
-            if(y-1 > 0 && grid[y-1][x] != 2){
+        if(current_y > y && y-1 > 0){
+            if(grid[y-1][x] != 2){
                 return 'u';
             }
         }
     }
-    if(current_x < x) {
-        if (x+1 <= max_w && grid[y][x + 1] != 2){
+    if(current_x < x && x+1 <= max_w) {
+        if (grid[y][x + 1] != 2){
             return 'r';
         }
     }
@@ -331,7 +337,7 @@ void grid(const int & x, const int & y, const int & max_w, const int & max_h){
     cout << "test grid";
     int furthest_x = 0;
     char direction = 'r';
-    int current_x = 0;
+    int current_x = 1;
     int current_y = 0;
 
     vector<vector<int>> grid;
@@ -343,6 +349,7 @@ void grid(const int & x, const int & y, const int & max_w, const int & max_h){
             grid[i].push_back(0);
         }
     }
+
 
     while(true){
         current_speed = default_speed;
@@ -390,6 +397,10 @@ void grid(const int & x, const int & y, const int & max_w, const int & max_h){
         }
 
         if(current_angle > -90 && current_angle < 90) {
+            turn(current_speed, current_direction, avg_angle);
+            set_motor_ultra_position(avg_angle);
+        }
+        else {
             //kruispunt
             grid[current_y][current_x] = 1;
             char new_direction = grid_decision(grid, current_x, current_y, max_w, max_h, x, y);
@@ -400,34 +411,43 @@ void grid(const int & x, const int & y, const int & max_w, const int & max_h){
             } else if(direction == 'l'){
                 offset = 180;
             } else if(direction == 'u'){
-                offset = -90;
-            } else if(direction == 'd'){
                 offset = 90;
+            } else if(direction == 'd'){
+                offset = -90;
             }
-
+            cout << "\nnew direction: " << new_direction << " offset: " << offset;
             if(new_direction == 'r'){
-                turn_on_place('f', offset+0);
+                turn(10, current_direction, offset+0);
+                current_x++;
+                cout << "\n going right";
             } else if(new_direction == 'd'){
-                turn_on_place('f', offset+90);
+                cout << "\n going down";
+                turn(10, current_direction, offset+90);
+                current_y++;
             } else if(new_direction == 'l'){
-                turn_on_place('f', offset+180);
+                current_x--;
+                cout << "\n going left";
+                turn(10, current_direction, offset+180);
             } else if(new_direction == 'u'){
-                turn_on_place('f', offset-90);
+                current_y--;
+                cout << "\n going up";
+                turn(10, current_direction, offset-90);
             } else if (new_direction == 's'){
-                turn_on_place('f', offset+360);
+                cout << "\n stopping";
+//                turn_on_place(current_direction, offset+360);
                 stop();
+                break;
             }
+            this_thread::sleep_for(chrono::milliseconds(1500));
+            usleep(100000);
             direction = new_direction;
-            turn_on_place(current_direction, current_angle);
-            straight(current_direction,current_speed);
-//            turn(current_speed, current_direction, avg_angle);
-//            set_motor_ultra_position(avg_angle);
-        }
-        else {
-            turn_on_place(current_direction, current_angle);
-            straight(current_direction,current_speed);
+//            turn_on_place(current_direction, current_angle);
+            straight(current_speed, current_direction);
+            usleep(500000);
+            cout << "\n___________________________________________\n";
         }
         usleep(5000);
-
+//        cout << "\n done test";
+//        break;
     }
 }

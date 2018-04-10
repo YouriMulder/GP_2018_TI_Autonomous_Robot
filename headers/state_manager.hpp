@@ -15,7 +15,7 @@ void dodge_object_state();
 float update_vect(int & current_angle);
 bool follow_line_state();
 
-char grid_decision(const vector<vector<int>> & grid, int current_x, int current_y, int max_w, int max_h, int x, int y);
+char grid_decision(const vector<vector<int>> & grid, const int & current_x, const int & current_y, const int & max_w, const int & max_h, const int & x, const int & y);
 void grid(const int & x, const int & y, const int & max_w = 0, const int & max_h = 0);
 
 #endif /* _STATE_MANAGER_HPP */

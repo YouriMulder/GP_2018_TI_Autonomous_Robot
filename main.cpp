@@ -72,6 +72,7 @@ int main() {
         cout << "testttt\n";
         grid(x, y, max_w, max_h);
   }
+  exit_signal_handler(SIGINT);
 }
 
 void exit_signal_handler(int signo) {
