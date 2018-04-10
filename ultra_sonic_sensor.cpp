@@ -28,6 +28,14 @@ void reset_motor_ultra_offset() {
 }
 
 /**
+  gets the position/encoder of the MOTOR
+  @return int the motor position/encoder
+ */
+int get_motor_ultra_position() {
+  return BP_ultra.get_motor_encoder(MOTOR);
+}
+
+/**
   * set motor to a absolute position
   * @param position the abosolute position where the motor turns to
   */
@@ -92,5 +100,5 @@ void init_ultra_sensor() {
   int sensor_type = BP_ultra.set_sensor_type(ULTRASONIC, SENSOR_TYPE_NXT_ULTRASONIC);
   set_motor_ultra_start_pos();
   reset_motor_ultra_offset();
-  BP_ultra.set_motor_limits(MOTOR, 100, 250);
+  BP_ultra.set_motor_limits(MOTOR, 100, 100);
 }

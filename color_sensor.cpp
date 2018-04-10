@@ -80,10 +80,7 @@ int read_color_sensor(){
  */
 bool color_detect_line(){
     int result = read_color_sensor();
-    if(result == 1){
-        return true;
-    }
-    return false;
+    return result == 1;
 }
 
 /**

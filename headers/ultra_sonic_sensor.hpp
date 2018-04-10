@@ -15,6 +15,9 @@ void reset_motor_ultra_offset();
 // sets the motor to the starting position
 void set_motor_ultra_start_pos();
 
+// gets the motor position
+int get_motor_ultra_position();
+
 // turns motor a amount of degrees relative to the current position
 void turn_motor_ultra(const int& degrees);
 
