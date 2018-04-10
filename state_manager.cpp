@@ -377,6 +377,7 @@ void grid(const int & x, const int & y, const int & max_w, const int & max_h){
     int current_x = 1;
     int current_y = 0;
     int offset = 0;
+    vector<bool> sensor_data = {};
 
     vector<vector<int>> grid;
 
@@ -440,10 +441,8 @@ void grid(const int & x, const int & y, const int & max_w, const int & max_h){
             current_speed = current_speed - (-1*0.3*current_angle);
         }
 
-        if(-1*color_get_reflection() > -90 && light_get_reflection() < 90) {
-            turn(current_speed, current_direction, avg_angle);
-        }
-        else {
+        if(color_get_reflection() > 60 && light_get_reflection() > 60) {
+            cout << "reflection: " << color_get_reflection() << " " << light_get_reflection() << endl;
             //kruispunt
             grid[current_y][current_x] = 1;
             char new_direction = grid_decision(grid, current_x, current_y, max_w, max_h, x, y, direction);
@@ -484,6 +483,8 @@ void grid(const int & x, const int & y, const int & max_w, const int & max_h){
             straight(current_speed, current_direction);
             usleep(500000);
             cout << "\n___________________________________________\n";
+        } else {
+            turn(current_speed, current_direction, avg_angle);
         }
         usleep(5000);
     }
