@@ -240,7 +240,6 @@ char find_in_grid(const vector<vector<int>> & grid, const int & current_x, const
 }
 
 char find_best_way(const vector<vector<int>> & grid, const int & current_x, const int & current_y, const int & max_h, const int & max_w){
-
     char result = find_in_grid(grid, current_x, current_y, max_h, max_w, 0);
     if(result != 'h'){
         return result;
@@ -256,153 +255,140 @@ char grid_decision(const vector<vector<int>> & grid, const int & current_x, cons
     cout << "x: " << x << endl;
     cout << "y: " << y << endl;
     print_map(grid);
-    if(current_x == max_w){
-        if(max_h == current_y){
-            if(current_x > x && current_x-1 >= 0){
-                if(grid[current_y][current_x-1] != 2){
-                    return 's';
-                }
-            }
-            return 'w';
-        }
-        if(current_y == 0){
-            if(current_x > x && current_x-1 >= 0 ){
-                if(grid[current_y][current_x-1] != 2){
-                    return 's';
-                }
-            }
-            return 'e';
-        }
-
-        if(current_x < x && current_x+1 <= max_w ) {
-            if (grid[current_y][current_x + 1] != 2){
-                return 'n';
-            }
-        }
-        if(current_y < y && current_y+1 <= max_h){
-            if(grid[current_y+1][current_x] != 2){
-                return 'e';
-            }
-        }
-        if(current_x > x && current_x-1 >= 0 ){
-            if(grid[current_y][current_x-1] != 2){
-                return 's';
-            }
-        }
-        if(current_y >= y && current_y-1 >= 0){
-            if(grid[current_y-1][current_x] != 2){
-                return 'w';
-            }
-        }
-    }
-    if(current_y == 0){
-        if(current_x < x){
-            cout << "check" << endl;
-//            if(current_x+1 <= max_w && grid[current_y][current_x+1] != 2){
-//                return 'n';
-//            } else {
-                return find_best_way(grid, current_x, current_y, max_h, max_w);
+//    if(current_x == max_w){
+//        if(max_h == current_y){
+//            if(current_x > x && current_x-1 >= 0){
+//                if(grid[current_y][current_x-1] != 2){
+//                    return 's';
+//                }
 //            }
-        } else if(current_y < y){
-            if(current_y+1 <= max_h && grid[current_y+1][current_x] != 2){
-                return 'e';
-            } else {
-                return find_best_way(grid, current_x, current_y, max_h, max_w);
-            }
-        }
-    }
-    if(current_x == 0){
-        if(current_y == 0){
-            if(current_x < x && current_x+1 <= max_w ){
-                if(grid[current_y][current_x+1] != 2){
-                    return 'n';
-                }
-            }else{
-                if(current_y+1 <= max_h && grid[current_y+1][current_x] != 2){
-                    return 'e';
-                } else {
-                    return 'n';
-                }
-            }
-        }
-        if(current_y == max_h){
-            if(current_x < x){
-                if(current_x+1 <= max_w && grid[current_y][current_x+1] != 2){
-                    return 'n';
-                } else {
-                    return 'w';
-                }
-            }
-            if(current_y-1 > 0 && grid[current_y-1][current_x] != 2){
-                return 'w';
-            } else {
-                return 'n';
-            }
-
-        }
-        if(current_x < x && current_x+1 <= max_w) {
-            if (grid[current_y][current_x + 1] != 2){
-                return 'n';
-            }
-        }
-        if(current_y < y && current_y+1 <= max_h ){
-            if(grid[current_y+1][current_x] != 2){
-                return 'e';
-            }
-        }
-        if(current_x > x && current_x-1 > 0){
-            if(grid[current_y][current_x-1] != 2){
-                return 's';
-            }
-        }
-        if(current_y > y && current_y-1 > 0){
-            if(grid[current_y-1][current_x] != 2){
-                return 'w';
-            }
-        }
-    }
+//            return find_best_way(grid, current_x, current_y, max_h, max_w);
+//        }
+//        if(current_y == 0){
+//            if(current_x > x && current_x-1 >= 0 ){
+//                if(grid[current_y][current_x-1] != 2){
+//                    return 's';
+//                }
+//            }
+//            return find_best_way(grid, current_x, current_y, max_h, max_w);
+//        }
+//
+//        if(current_x < x && current_x+1 <= max_w ) {
+//            if (grid[current_y][current_x + 1] != 2){
+//                return 'n';
+//            }
+//            return find_best_way(grid, current_x, current_y, max_h, max_w);
+//        }
+//        if(current_y < y && current_y+1 <= max_h){
+//            if(grid[current_y+1][current_x] != 2){
+//                return 'e';
+//            }
+//            return find_best_way(grid, current_x, current_y, max_h, max_w);
+//        }
+//        if(current_x > x && current_x-1 >= 0 ){
+//            if(grid[current_y][current_x-1] != 2){
+//                return 's';
+//            }
+//            return find_best_way(grid, current_x, current_y, max_h, max_w);
+//        }
+//        if(current_y >= y && current_y-1 >= 0){
+//            if(grid[current_y-1][current_x] != 2){
+//                return 'w';
+//            }
+//            return find_best_way(grid, current_x, current_y, max_h, max_w);
+//        }
+//    }
+//    if(current_y == 0){
+//        if(current_x < x){
+//            return find_best_way(grid, current_x, current_y, max_h, max_w);
+//        } else if(current_y < y){
+//            if(current_y+1 <= max_h && grid[current_y+1][current_x] != 2){
+//                return 'e';
+//            } else {
+//                return find_best_way(grid, current_x, current_y, max_h, max_w);
+//            }
+//        }
+//    }
+//    if(current_x == 0){
+//        if(current_y == 0){
+//            if(current_x < x && current_x+1 <= max_w ){
+//                if(grid[current_y][current_x+1] != 2){
+//                    return 'n';
+//                }
+//            }else{
+//                if(current_y+1 <= max_h && grid[current_y+1][current_x] != 2){
+//                    return 'e';
+//                } else {
+//                    return find_best_way(grid, current_x, current_y, max_h, max_w);
+//                }
+//            }
+//        }
+//        if(current_y == max_h){
+//            if(current_x < x){
+//                if(current_x+1 <= max_w && grid[current_y][current_x+1] != 2){
+//                    return 'n';
+//                } else {
+//                    return find_best_way(grid, current_x, current_y, max_h, max_w);
+//                }
+//            }
+//            if(current_y-1 > 0 && grid[current_y-1][current_x] != 2){
+//                return 'w';
+//            } else {
+//                return find_best_way(grid, current_x, current_y, max_h, max_w);
+//            }
+//
+//        }
+//        if(current_x < x && current_x+1 <= max_w) {
+//            if (grid[current_y][current_x + 1] != 2){
+//                return 'n';
+//            }
+//            return find_best_way(grid, current_x, current_y, max_h, max_w);
+//        }
+//        if(current_y < y && current_y+1 <= max_h ){
+//            if(grid[current_y+1][current_x] != 2){
+//                return 'e';
+//            }
+//            return find_best_way(grid, current_x, current_y, max_h, max_w);
+//        }
+//        if(current_x > x && current_x-1 > 0){
+//            if(grid[current_y][current_x-1] != 2){
+//                return 's';
+//            }
+//            return find_best_way(grid, current_x, current_y, max_h, max_w);
+//        }
+//        if(current_y > y && current_y-1 > 0){
+//            if(grid[current_y-1][current_x] != 2){
+//                return 'w';
+//            }
+//            return find_best_way(grid, current_x, current_y, max_h, max_w);
+//        }
+//    }
     if(current_x < x && current_x+1 <= max_w) {
-        if (grid[current_y][current_x + 1] != 2){
+        if (grid[current_y][current_x + 1] == 0){
             return 'n';
         } else {
-            if(direction == 'n'){
-                return 'e';
-            } else {
-                return direction;
-            }
+            return find_best_way(grid, current_x, current_y, max_h, max_w);
         }
     }
     if(current_y < y){
-        if(current_y+1 <= max_h && grid[current_y+1][current_x] != 2){
+        if(current_y+1 <= max_h && grid[current_y+1][current_x] == 0){
             return 'e';
         } else {
-            if(direction == 'e'){
-                return 'n';
-            } else {
-                return direction;
-            }
+            return find_best_way(grid, current_x, current_y, max_h, max_w);
         }
     }
     if(current_x > x){
-        if(current_x-1 > 0 && grid[current_y][current_x-1] != 2){
+        if(current_x-1 > 0 && grid[current_y][current_x-1] == 0){
             return 's';
         } else {
-            if(direction == 's'){
-                return 'w';
-            } else {
-                return direction;
-            }
+            return find_best_way(grid, current_x, current_y, max_h, max_w);
         }
     }
     if(current_y > y){
-        if(current_y-1 > 0 && grid[current_y-1][current_x] != 2){
+        if(current_y-1 > 0 && grid[current_y-1][current_x] == 0){
             return 'w';
         } else {
-            if(direction == 'w'){
-                return 's';
-            } else {
-                return direction;
-            }
+            return find_best_way(grid, current_x, current_y, max_h, max_w);
         }
     }
     cout << "ik ben er... denk ik?!?!?!???";
@@ -419,6 +405,7 @@ void grid(const int & x, const int & y, const int & max_w, const int & max_h){
     int offset = 0;
     int cros_check = true;
     int angle = 0;
+    char new_direction = 'n';
 
     vector<bool> sensor_data = {};
 
@@ -440,9 +427,7 @@ void grid(const int & x, const int & y, const int & max_w, const int & max_h){
             break;
         }
         current_speed = default_speed;
-        cout << "ultra: " << get_ultra_distance() << endl;
-        if(!is_ultra_distance_enough()) {
-            cout << "<<<<<<<<<<<<<<<<<ultra: " << get_ultra_distance() << endl;
+        if(!is_ultra_distance_enough() && cros_check == true) {
             cout << "object detected" << endl;
             cros_check = false;
             stop();
@@ -493,11 +478,17 @@ void grid(const int & x, const int & y, const int & max_w, const int & max_h){
         }
 
         if(color_get_reflection() > 60 && light_get_reflection() > 60) {
+            cros_check = true;
             cout << "reflection: " << color_get_reflection() << " " << light_get_reflection() << endl;
             //kruispunt
-            cros_check = true;
             grid[current_y][current_x] = 1;
-            char new_direction = grid_decision(grid, current_x, current_y, max_w, max_h, x, y, direction);
+            if(current_x == x && current_y == y){
+                cout << "Ik ben er!!!";
+                new_direction = 'h';
+            } else {
+                new_direction = grid_decision(grid, current_x, current_y, max_w, max_h, x, y, direction);
+            }
+
 
             if(direction == 'n'){
                 offset = 0;
@@ -520,7 +511,7 @@ void grid(const int & x, const int & y, const int & max_w, const int & max_h){
             } else if(new_direction == 's'){
                 current_x--;
                 cout << "\n going south" << endl;
-                angle = offset+150;
+                angle = offset+180;
             } else if(new_direction == 'w'){
                 current_y--;
                 cout << "\n going west" << endl;
@@ -531,9 +522,9 @@ void grid(const int & x, const int & y, const int & max_w, const int & max_h){
                 break;
             }
             cout << "angle: " << angle << endl;
-            if(angle > 90){
+            if(angle == 180){
                 cout << "turn on place" << endl;
-                turn(10, current_direction, angle);
+                turn(10, current_direction, 160);
             } else {
                 turn(10,current_direction, angle);
             }
