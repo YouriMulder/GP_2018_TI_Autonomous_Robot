@@ -3,6 +3,7 @@
 #include <iostream>
 #include <chrono>
 #include <thread>
+#include <vector>
 using namespace std;
 
 #define MOTOR PORT_D
@@ -85,8 +86,22 @@ int get_ultra_distance() {
   * @return bool enough distance between object and sensor
   */
 bool is_ultra_distance_enough() {
-  int distance = get_ultra_distance();
-  return !(distance > 0 && distance < min_ultra_distance);
+  vector<int> distances = {};
+  for(int i = 0; i < 2; ++i) {
+      distances.push_back(get_ultra_distance());
+//      this_thread::sleep_for(chrono::milliseconds(5));
+  }
+
+  int total = 0;
+
+  for(const int& x : distances) {
+      total += x;
+  }
+
+  return (total/distances.size() >= min_ultra_distance && total/distances.size() != 0);
+
+
+  //return !(distance > 0 && distance < min_ultra_distance);
 }
 
 // sets up the ultrasonic sensor and the motor where it's attached to
