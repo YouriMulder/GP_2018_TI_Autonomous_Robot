@@ -4,11 +4,12 @@
 #define PORT_2 0x02
 
 struct calibrate_color {
-    int max;
-    int min;
+  int max;
+  int min;
 };
 
-// reads calibration from calibration_save file and save data to calibration struct
+// reads calibration from calibration_save file and save data to calibration
+// struct
 void color_read_and_set_calibration_save();
 
 // setup color sensor. defauld port is PORT_2

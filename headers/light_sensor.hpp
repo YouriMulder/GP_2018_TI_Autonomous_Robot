@@ -8,10 +8,10 @@ using namespace std;
 // updates the calibration values struct from the calibration_save file
 void light_read_and_set_calibration_save();
 
-//struct to save the calibrateion
-struct calibrate_light{
-    int max;
-    int min;
+// struct to save the calibrateion
+struct calibrate_light {
+  int max;
+  int min;
 };
 
 // setup light sensor. default port is PORT_1

@@ -5,9 +5,9 @@ void exit_signal_handler(int signo);
 
 // getters and setters
 int get_min_ultra_distance();
-void set_min_ultra_distance(const int& value);
+void set_min_ultra_distance(const int &value);
 int get_default_min_ultra_distance();
-void set_motor_ultra_position(const int& position);
+void set_motor_ultra_position(const int &position);
 
 // resets the motor encoder to 0
 void reset_motor_ultra_offset();
@@ -19,7 +19,7 @@ void set_motor_ultra_start_pos();
 int get_motor_ultra_position();
 
 // turns motor a amount of degrees relative to the current position
-void turn_motor_ultra(const int& degrees);
+void turn_motor_ultra(const int &degrees);
 
 // sets the motor to the starting position
 void set_motor_ultra_straight();

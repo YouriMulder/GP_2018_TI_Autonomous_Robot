@@ -1,8 +1,8 @@
 #include "BrickPi3/BrickPi3.h"
-#include <iostream>
-#include <unistd.h>
 #include <fstream>
+#include <iostream>
 #include <string>
+#include <unistd.h>
 #include <vector>
 using namespace std;
 
@@ -14,11 +14,11 @@ BrickPi3 BP_gfunctions;
   @param string substring
   @return bool true if the value is found, else false
  */
-bool find_sub_string(string str, string sub){
-    while (str.find(sub) != string::npos){
-        return true;
-    }
-    return false;
+bool find_sub_string(string str, string sub) {
+  while (str.find(sub) != string::npos) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -27,11 +27,11 @@ bool find_sub_string(string str, string sub){
   @param string sub substring you want to remove from the full string
   @return string the string minus the substring
  */
-string remove_sub_str(string str, string sub){
-    while (str.find(sub) != string::npos){
-        str.erase(str.find(sub), sub.length());
-    }
-    return str;
+string remove_sub_str(string str, string sub) {
+  while (str.find(sub) != string::npos) {
+    str.erase(str.find(sub), sub.length());
+  }
+  return str;
 }
 
 /**
@@ -39,8 +39,10 @@ string remove_sub_str(string str, string sub){
   @param vector the vector you want the average value from
   @return int average value in the vector
  */
-int average_vector(const vector<int>& v) {
+int average_vector(const vector<int> &v) {
   int total = 0;
-  for(const int& x : v) { total += x; }
-  return total/v.size();
+  for (const int &x : v) {
+    total += x;
+  }
+  return total / v.size();
 }

@@ -5,21 +5,21 @@
 void init_motors();
 
 // starts driving the robot straight forward or backward
-void straight (float speed, char f_r);
+void straight(float speed, char f_r);
 
 // drives robot forward or backward using a given angle
-void turn (float speed, char f_r, float corner);
+void turn(float speed, char f_r, float corner);
 
 // stops both motors
-void stop ();
+void stop();
 
 // sets both motors in the free rotating position
-void free ();
+void free();
 
 // calls free()
 void reset_motors();
 
 // turns robot on it's place
-void turn_on_place(char f_r,float corner);
+void turn_on_place(char f_r, float corner);
 
 #endif /* _DRIVING_MOTORS_HPP*/
