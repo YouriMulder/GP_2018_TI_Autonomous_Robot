@@ -7,13 +7,19 @@
 #include <fstream>
 using namespace std;
 
+//brick pi 3 library
 BrickPi3 BP_color;
 
+//variable to store color data in
 sensor_color_t data;
 
+//default calibration values
 calibrate_color color = {447, 661};
 
-//read calibration from calibration_save file and save data to calibration struct
+
+/**
+ * @brief read calibration from calibration_save file and save data to calibration struct
+ */
 void color_read_and_set_calibration_save(){
     try {
         ifstream readFile("calibration_save");
@@ -41,12 +47,18 @@ void color_read_and_set_calibration_save(){
         cout << "something went wrong, does calibration_save file exist";
     }
 }
-//setup a color sensor. defauld PORT_2 is PORT_2_2
+/**
+ * @brief setup a color sensor. defauld PORT_2 is PORT_2_2
+ * @return int
+ */
 int set_color_sensor(){
     return BP_color.set_sensor_type(PORT_2, SENSOR_TYPE_NXT_COLOR_FULL);
 }
 
-//retrun value between 0 to 100. 0 is black, 100 is white.
+/**
+ * @brief calculate sensor data to a scale from 0 to 100.
+ * @return int reflection -between 0 and 100
+ */
 int color_get_reflection(){
     BP_color.get_sensor(PORT_2, data);
     float reflection = data.reflected_green;
@@ -62,13 +74,19 @@ int color_get_reflection(){
     return (int) reflection;
 }
 
-//get the color sensor data
+/**
+ * @brief get the color sensor data
+ * @return int dat.color -color sensor data
+ */
 int read_color_sensor(){
     BP_color.get_sensor(PORT_2, data);
     return data.color;
 }
 
-//check if the sensor sees black
+/**
+ * @brief check if the sensor sees black
+ * @return bool -true if sensor sees black
+ */
 bool color_detect_line(){
     int result = read_color_sensor();
     if(result == 1){
@@ -77,11 +95,17 @@ bool color_detect_line(){
     return false;
 }
 
+/**
+ * @brief check if color sensor sees red
+ * @return bool -true if sensor sees red
+ */
 bool is_color_red() {
   return read_color_sensor() == 5;
 }
 
-// reset min and max value for calibrate color
+/**
+ * @brief reset min and max value for calibrate color
+ */
 void color_calibrate(){
     float max = 0;
     float min = 0;

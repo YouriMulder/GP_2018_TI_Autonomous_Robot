@@ -273,7 +273,7 @@ char find_best_way(const vector<vector<int>> & grid, const int & current_x, cons
 }
 
 /**
- * @brief decide witch way to head to.
+ * @brief decide which way to head to.
  * @param const vector<vector<int>> &  grid
  * @param const int & current_x
  * @param const int & current_y
