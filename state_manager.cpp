@@ -211,7 +211,10 @@ bool follow_line_state() {
   usleep(5000);
   return true;
 }
-
+/**
+ * @brief print a 2d vector
+ * @param vector<vector<int>> grid
+ */
 void print_map(const vector<vector<int>> & grid){
     cout << endl;
     for (int i = 0; i < grid.size(); ++i) {
@@ -223,6 +226,16 @@ void print_map(const vector<vector<int>> & grid){
     cout << endl;
 }
 
+/**
+ * @brief find the direction where find is located
+ * @param const vector<vector<int>> & grid
+ * @param const int & current_x
+ * @param const int & current_y
+ * @param const int & max_y
+ * @param cons int & max_x
+ * @param int find
+ * @return char direction
+ */
 char find_in_grid(const vector<vector<int>> & grid, const int & current_x, const int & current_y, const int & max_y, const int & max_x, int find){
     if(current_x+1 <= max_x && grid[current_y][current_x+1] == find){
         return 'n';
@@ -240,6 +253,15 @@ char find_in_grid(const vector<vector<int>> & grid, const int & current_x, const
     return 'h';
 }
 
+/**
+ * @brief find the best direction to head based on the grid
+ * @param const vector<vector<int>> & grid
+ * @param const int & current_x
+ * @param const int & current_y
+ * @param const int & max_y
+ * @param const int & max_x
+ * @return
+ */
 char find_best_way(const vector<vector<int>> & grid, const int & current_x, const int & current_y, const int & max_y, const int & max_x){
     cout << "best way" << endl;
     char result = find_in_grid(grid, current_x, current_y, max_y, max_x, 0);
@@ -250,6 +272,18 @@ char find_best_way(const vector<vector<int>> & grid, const int & current_x, cons
     return find_in_grid(grid, current_x, current_y, max_y, max_x, 1);
 }
 
+/**
+ * @brief decide witch way to head to.
+ * @param const vector<vector<int>> &  grid
+ * @param const int & current_x
+ * @param const int & current_y
+ * @param const int & max_x
+ * @param const int & max_y
+ * @param const int & x -target axis
+ * @param const int & y -target axis
+ * @param char direction
+ * @return char best direction to head for
+ */
 char grid_decision(vector<vector<int>> & grid, const int & current_x, const int & current_y, const int & max_x, const int & max_y, const int & x, const int & y, char direction){
     cout << "current_x: " << current_x << endl;
     cout << "current_y: " << current_y << endl;
@@ -293,6 +327,13 @@ char grid_decision(vector<vector<int>> & grid, const int & current_x, const int 
     return 'h';
 }
 
+/**
+ * @brief find a way to a cordinate on a grit
+ * @param const int & x -head to this x axis
+ * @param const int & y -head to this y axis
+ * @param const int & max_x -max x coordinate before going of the grid
+ * @param const int & max_y -max y coordinate before going of the grid
+ */
 void grid(const int & x, const int & y, const int & max_x, const int & max_y){
     set_motor_ultra_straight();
     cout << "test grid";
@@ -329,6 +370,7 @@ void grid(const int & x, const int & y, const int & max_x, const int & max_y){
 
 
         if (!is_ultra_distance_enough()) {
+            //object in front //////////////////////////////////////////////////////////////////
             cout << "object detected" << endl;
             free();
             grid[current_y][current_x] = 2;
@@ -380,11 +422,11 @@ void grid(const int & x, const int & y, const int & max_x, const int & max_y){
         }
 
         if((color_get_reflection() > 60 && light_get_reflection() > 60) || cross) {
+            //intersection///////////////////////////////////////////////////////////////////////////////////
+
             cross = false;
             cout << color_get_reflection() << "\n" << light_get_reflection() << endl;
             stop();
-//            usleep(100000);
-            //kruispunt
             grid[current_y][current_x] = 1;
             if(current_x == x && current_y == y){
                 cout << "Ik ben er!!!";
@@ -446,7 +488,6 @@ void grid(const int & x, const int & y, const int & max_x, const int & max_y){
             }
             this_thread::sleep_for(chrono::milliseconds(1500));
             direction = new_direction;
-            //straight(current_speed, current_direction);
             cout << "\n___________________________________________\n";
         } else {
             if(avg_angle < -95 || avg_angle > 95) {
