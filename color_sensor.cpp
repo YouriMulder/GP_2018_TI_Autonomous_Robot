@@ -52,8 +52,7 @@ int color_get_reflection(){
     float reflection = data.reflected_green;
     reflection += data.reflected_red;
     reflection += data.reflected_blue;
-
-    reflection = ((reflection / 3) - color.min)/(color.max - color.min) * 100;
+    reflection = (((reflection / 3) - color.min)/(color.max - color.min)) * 100;
     if (reflection < 0){
         return 0;
     }

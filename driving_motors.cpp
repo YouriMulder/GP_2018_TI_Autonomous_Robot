@@ -1,3 +1,4 @@
+#include <thread>
 #include "headers/driving_motors.hpp"
 #include "BrickPi3/BrickPi3.h"
 #include <iostream>
@@ -37,8 +38,11 @@ void straight (float speed, char f_r) {
 	 * stopping both motors
 	 */
 void stop () {
-	BP_wheels.set_motor_power(L,0);
-	BP_wheels.set_motor_power(R,0);
+
+        thread stopL(&BrickPi3::set_motor_power, &BP_wheels, L,0);
+//        thread stopR(&BrickPi3::set_motor_power, &BP_wheels, R,0);
+        BP_wheels.set_motor_power(R,0);
+        stopL.join();
 }
 	/**
 	 * setting both motors in the free rotating position
