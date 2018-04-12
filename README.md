@@ -8,7 +8,7 @@
  **master/stable:** hierin staat de code samengevoegd en krijgt de user een keuze of hij/zij op een grid wil rijden of op een rondje.<br/>
 
 ## Deze bestanden behoren tot:TI-V1C-Groep 7
- **Deze groep bestaat uit de volgende leden:<br/>
+ **Deze groep bestaat uit de volgende leden:**<br/>
 **Youri Okkerse**	1686236<br/>
 **Lars Versteeg**		1719172<br/>
 **Youri Mulder**		1716390<br/>
