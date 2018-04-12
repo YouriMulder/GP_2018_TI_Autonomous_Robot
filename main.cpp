@@ -54,12 +54,29 @@ int main() {
 	cout << "start driving" <<endl;
 	cin >> start;
 
+	calibrate_ultra_sonic_motor(90);
+	
 	if(start ==1) {
-    calibrate_ultra_sonic_motor(90);
-    while(robot_active) {
-      robot_active = follow_line_state();
-    }
-  }
+		while(robot_active) {
+			robot_active = follow_line_state();
+		}
+    } else {
+		cout << "start driving" <<endl;
+		int x = 0;
+		int y = 0;
+		int max_w = 0;
+		int max_h = 0;
+		cout << "\nx: ";
+		cin >> x;
+		cout << "\ny: ";
+		cin >> y;
+		cout << "\nmax w: ";
+		cin >> max_w;
+		cout << "\nmax h: ";
+		cin >> max_h;
+		
+		grid(x, y, max_w, max_h);
+	}
   exit_signal_handler(SIGINT);
 }
 
