@@ -59,6 +59,7 @@ void calibrate_line_sensors(){
 
         usleep(100000);
     }
+    cout << "min color: " << min_color << endl;
     //sensors on white
     if(choice == 'y'){
         straight(5, 'f');
@@ -87,6 +88,7 @@ void calibrate_line_sensors(){
 
         usleep(100000);
     }
+    cout << "max color: " << max_color << endl;
     if(save_calibration((int) max_color, (int) min_color, (int) max_light, (int) min_light)){
         cout << "calibration successful\n";
     } else {
